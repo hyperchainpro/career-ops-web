@@ -107,7 +107,7 @@ doc = SimpleDocTemplate(
     output_path, pagesize=A4,
     leftMargin=1.5*cm, rightMargin=1.5*cm,
     topMargin=1.3*cm, bottomMargin=1.3*cm,
-    title='Resume - Febri Rizki, S.Si., M.Si.',
+    title='Resume - Febri Rizki',
     author='Febri Rizki', creator='Febri Rizki',
     subject='Resume ATS-Friendly - UI/UX Designer & AI Engineer'
 )
@@ -115,11 +115,11 @@ doc = SimpleDocTemplate(
 story = []
 
 # ── Header ──
-story.append(Paragraph('<b>FEBRI RIZKI, S.Si., M.Si.</b>', name_style))
+story.append(Paragraph('<b>FEBRI RIZKI</b>', name_style))
 story.append(Paragraph('UI/UX Designer &amp; AI Engineer', title_style))
 story.append(Paragraph(
-    '[EMAIL_ANDA]@email.com  |  [+62 8xx-xxxx-xxxx]  |  [Kota], Indonesia  |  '
-    'github.com/febririzki95  |  github.com/hyperchainpro',
+    '[EMAIL_ANDA]@email.com  |  0852-6543-6395 / 0896-5473-8245  |  Langsa, Aceh, Indonesia  |  '
+    'github.com/febririzki95  |  linkedin.com/in/febririzki95',
     contact_style
 ))
 story.append(HRFlowable(width='100%', thickness=1.2, color=HEADER_FILL,
@@ -129,12 +129,12 @@ story.append(HRFlowable(width='100%', thickness=1.2, color=HEADER_FILL,
 story.extend(section_header('PROFIL PROFESIONAL'))
 story.append(Paragraph(
     'UI/UX Designer dan AI Engineer dengan kombinasi unik antara keahlian desain '
-    'antarmuka pengguna dan rekayasa kecerdasan buatan. Memiliki gelar Magister Sains '
-    '(M.Si.) dan pengalaman membangun produk digital end-to-end mulai dari riset '
-    'pengguna, desain UI/UX, hingga integrasi model AI ke produksi. Semifinalis '
-    'Hackathon PIDI Digdaya Bank Indonesia 2026 dengan fokus pada solusi data-driven. '
-    'Berkomitmen menghadirkan pengalaman pengguna yang intuitif sekaligus didukung '
-    'sistem AI yang andal dan dapat diskalakan.',
+    'antarmuka pengguna dan rekayasa kecerdasan buatan. Lulusan Magister Sains '
+    'Universitas Sumatera Utara (2024) dengan pengalaman membangun produk digital '
+    'end-to-end mulai dari riset pengguna, desain UI/UX, hingga integrasi model AI '
+    'ke produksi. Semifinalis Hackathon PIDI Digdaya Bank Indonesia 2026 dengan fokus '
+    'pada solusi data-driven. Berkomitmen menghadirkan pengalaman pengguna yang '
+    'intuitif sekaligus didukung sistem AI yang andal dan dapat diskalakan.',
     body_style
 ))
 
@@ -165,14 +165,14 @@ story.extend(experience_entry(
 story.extend(section_header('PENDIDIKAN'))
 story.extend(education_entry(
     'Magister Sains (M.Si.)',
-    '[Nama Universitas S2]',
-    '[Tahun Mulai] - [Tahun Lulus]',
+    'Universitas Sumatera Utara (USU)',
+    '2022 - 2024',
     'Fokus studi: [Bidang Studi, mis. Sains Data / Ilmu Komputer / Matematika Terapan]'
 ))
 story.extend(education_entry(
     'Sarjana Sains (S.Si.)',
-    '[Nama Universitas S1]',
-    '[Tahun Mulai] - [Tahun Lulus]',
+    'Universitas Syiah Kuala (Unsyiah)',
+    '2014 - 2018',
     'Fokus studi: [Bidang Studi, mis. Matematika / Statistika / Ilmu Komputer]'
 ))
 

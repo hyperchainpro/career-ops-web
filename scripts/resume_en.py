@@ -107,7 +107,7 @@ doc = SimpleDocTemplate(
     output_path, pagesize=A4,
     leftMargin=1.5*cm, rightMargin=1.5*cm,
     topMargin=1.3*cm, bottomMargin=1.3*cm,
-    title='Resume - Febri Rizki, S.Si., M.Si.',
+    title='Resume - Febri Rizki',
     author='Febri Rizki', creator='Febri Rizki',
     subject='ATS-Friendly Resume - UI/UX Designer & AI Engineer'
 )
@@ -115,11 +115,11 @@ doc = SimpleDocTemplate(
 story = []
 
 # ── Header ──
-story.append(Paragraph('<b>FEBRI RIZKI, S.Si., M.Si.</b>', name_style))
+story.append(Paragraph('<b>FEBRI RIZKI</b>', name_style))
 story.append(Paragraph('UI/UX Designer &amp; AI Engineer', title_style))
 story.append(Paragraph(
-    '[YOUR_EMAIL]@email.com  |  [+62 8xx-xxxx-xxxx]  |  [City], Indonesia  |  '
-    'github.com/febririzki95  |  github.com/hyperchainpro',
+    '[YOUR_EMAIL]@email.com  |  +62 852-6543-6395 / +62 896-5473-8245  |  Langsa, Aceh, Indonesia  |  '
+    'github.com/febririzki95  |  linkedin.com/in/febririzki95',
     contact_style
 ))
 story.append(HRFlowable(width='100%', thickness=1.2, color=HEADER_FILL,
@@ -129,12 +129,12 @@ story.append(HRFlowable(width='100%', thickness=1.2, color=HEADER_FILL,
 story.extend(section_header('PROFESSIONAL SUMMARY'))
 story.append(Paragraph(
     'UI/UX Designer and AI Engineer with a unique blend of user interface design '
-    'expertise and artificial intelligence engineering capabilities. Holds a Master '
-    'of Science (M.Si.) degree with hands-on experience building end-to-end digital '
-    'products spanning user research, UI/UX design, and production-grade AI model '
-    'integration. Semifinalist at the PIDI Digdaya Bank Indonesia Hackathon 2026 with '
-    'a strong focus on data-driven solutions. Committed to delivering intuitive user '
-    'experiences backed by reliable, scalable AI systems.',
+    'expertise and artificial intelligence engineering capabilities. Holds a Master of '
+    'Science degree from Universitas Sumatera Utara (2024) with hands-on experience '
+    'building end-to-end digital products spanning user research, UI/UX design, and '
+    'production-grade AI model integration. Semifinalist at the PIDI Digdaya Bank '
+    'Indonesia Hackathon 2026 with a strong focus on data-driven solutions. Committed '
+    'to delivering intuitive user experiences backed by reliable, scalable AI systems.',
     body_style
 ))
 
@@ -165,14 +165,14 @@ story.extend(experience_entry(
 story.extend(section_header('EDUCATION'))
 story.extend(education_entry(
     'Master of Science (M.Si.)',
-    '[Graduate University Name]',
-    '[Start Year] - [Graduation Year]',
+    'Universitas Sumatera Utara (USU)',
+    '2022 - 2024',
     'Focus: [Field of Study, e.g., Data Science / Computer Science / Applied Mathematics]'
 ))
 story.extend(education_entry(
     'Bachelor of Science (S.Si.)',
-    '[Undergraduate University Name]',
-    '[Start Year] - [Graduation Year]',
+    'Universitas Syiah Kuala (Unsyiah)',
+    '2014 - 2018',
     'Focus: [Field of Study, e.g., Mathematics / Statistics / Computer Science]'
 ))
 
