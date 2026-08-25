@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio - Febri Rizki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 720px 1020px; margin: 0; }
+    :root {
+      --c-bg: #0d1117;
+      --c-bg-secondary: #161b22;
+      --c-bg-tertiary: #21262d;
+      --c-border: #30363d;
+      --c-text: #c9d1d9;
+      --c-text-secondary: #8b949e;
+      --c-text-muted: #6e7681;
+      --c-accent: #58a6ff;
+      --c-green: #238636;
+      --c-green-light: #2ea043;
+      --c-green-text: #7ee787;
+      --c-yellow: #d29922;
+      --c-orange: #db6d28;
+      --c-purple: #8957e5;
+      --c-pink: #db61a2;
+      --c-red: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      margin: 0; padding: 0; width: 720px;
+      background: var(--c-bg); color: var(--c-text);
+      font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.5;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; background: #222; }
+      body { transform-origin: top center; margin: 20px auto; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    }
+    .cover {
+      width: 720px; height: 1020px; box-sizing: border-box;
+      break-after: page; overflow: hidden;
+      padding: 70px 65px;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      position: relative; display: flex; flex-direction: column; justify-content: center;
+    }
+    .cover::before {
+      content: ''; position: absolute; top: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(35, 134, 54, 0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cover::after {
+      content: ''; position: absolute; bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(88, 166, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cover-content { position: relative; z-index: 2; }
+    .cover-tag {
+      display: inline-block; padding: 4px 12px;
+      background: rgba(35, 134, 54, 0.2); border: 1px solid #238636;
+      border-radius: 20px; color: #7ee787; font-size: 11px;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .cover-title {
+      font-size: 56px; font-weight: 900; line-height: 1.05;
+      letter-spacing: -1.5px; color: #ffffff; margin-bottom: 28px;
+    }
+    .cover-subtitle { font-size: 22px; color: var(--c-accent); font-weight: 600; margin-bottom: 44px; }
+    .cover-tagline {
+      font-size: 14.5px; color: var(--c-text-secondary); line-height: 1.7;
+      max-width: 540px; margin-bottom: 48px;
+    }
+    .cover-meta {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 22px; background: rgba(22, 27, 34, 0.7);
+      border: 1px solid var(--c-border); border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--c-text-secondary);
+    }
+    .cover-meta-row { display: flex; align-items: center; gap: 10px; }
+    .cover-meta-label { color: var(--c-text-muted); min-width: 80px; }
+    .cover-meta-value { color: var(--c-text); }
+    .cover-meta-value a { color: var(--c-accent); text-decoration: none; }
+    .cover-bottom {
+      position: absolute; bottom: 36px; left: 65px; right: 65px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace;
+    }
+    .main-content { padding: 50px 55px 40px 55px; }
+    .section-header { break-after: avoid; break-inside: avoid; margin-top: 24px; margin-bottom: 14px; }
+    .section-header:first-child { margin-top: 0; }
+    .section-tag {
+      display: inline-block; padding: 2px 10px;
+      background: rgba(88, 166, 255, 0.15); border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 12px; color: var(--c-accent); font-size: 10px;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
+    }
+    .section-title {
+      font-size: 24px; font-weight: 800; color: #ffffff;
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .section-divider {
+      width: 60px; height: 3px; background: var(--c-green);
+      border-radius: 2px; margin-bottom: 14px;
+    }
+    .body-text {
+      font-size: 12.5px; color: var(--c-text-secondary);
+      line-height: 1.7; margin-bottom: 10px;
+    }
+    .project-card {
+      break-inside: avoid; margin-bottom: 14px;
+      background: var(--c-bg-secondary); border: 1px solid var(--c-border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .repo-header {
+      padding: 14px 18px; border-bottom: 1px solid var(--c-border);
+      background: var(--c-bg-tertiary);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .repo-title { display: flex; align-items: center; gap: 8px; }
+    .repo-icon { width: 16px; height: 16px; fill: var(--c-text-muted); }
+    .repo-name { font-size: 15px; font-weight: 700; color: var(--c-accent); text-decoration: none; }
+    .visibility-badge {
+      display: inline-block; padding: 2px 8px; border: 1px solid var(--c-border);
+      border-radius: 12px; font-size: 10.5px; color: var(--c-text-muted);
+      font-weight: 500; font-family: 'JetBrains Mono', monospace; text-transform: capitalize;
+    }
+    .repo-updated { font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; }
+    .repo-body { padding: 18px; }
+    .repo-tagline { font-size: 14px; color: var(--c-text); margin-bottom: 10px; font-weight: 600; }
+    .repo-desc { font-size: 12.5px; color: var(--c-text-secondary); line-height: 1.65; margin-bottom: 14px; }
+    .tech-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .tech-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--c-border); border-radius: 12px;
+      font-size: 10.5px; color: var(--c-text);
+      font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    }
+    .tech-badge::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--badge-color, var(--c-text-muted));
+    }
+    .features { margin-top: 8px; margin-bottom: 12px; }
+    .feature {
+      display: flex; align-items: flex-start; gap: 8px;
+      margin-bottom: 5px; font-size: 12px; color: var(--c-text); line-height: 1.55;
+    }
+    .feature-icon { flex-shrink: 0; width: 14px; height: 14px; color: var(--c-green-text); font-size: 13px; line-height: 1.3; font-weight: 700; }
+    .code-block {
+      background: #010409; border: 1px solid var(--c-border); border-radius: 8px;
+      padding: 12px 14px; font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; line-height: 1.6; color: var(--c-text);
+      margin: 10px 0; overflow-x: hidden; white-space: pre-wrap; word-break: break-word;
+    }
+    .code-comment { color: var(--c-text-muted); }
+    .code-keyword { color: #ff7b72; }
+    .code-string { color: #a5d6ff; }
+    .code-property { color: #79c0ff; }
+    .code-number { color: #d2a8ff; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+    .stat-item {
+      background: var(--c-bg-tertiary); border: 1px solid var(--c-border);
+      border-radius: 8px; padding: 10px; text-align: center;
+    }
+    .stat-value { font-size: 19px; font-weight: 800; color: #7ee787; font-family: 'JetBrains Mono', monospace; }
+    .stat-label { font-size: 10.5px; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+    .repo-url {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 12px; background: rgba(35, 134, 54, 0.1);
+      border: 1px solid rgba(35, 134, 54, 0.3); border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: #7ee787; margin-top: 8px;
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .about-card { background: var(--c-bg-secondary); border: 1px solid var(--c-border); border-radius: 10px; padding: 16px; }
+    .about-card-title { font-size: 12px; font-weight: 700; color: var(--c-accent); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+    .about-card-content { font-size: 12px; color: var(--c-text-secondary); line-height: 1.7; }
+    .tech-stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 10px; }
+    .tech-stack-item {
+      background: var(--c-bg-tertiary); border: 1px solid var(--c-border);
+      border-radius: 6px; padding: 9px; text-align: center;
+      font-size: 11px; color: var(--c-text); font-weight: 500; position: relative; overflow: hidden;
+    }
+    .tech-stack-item::before {
+      content: ''; display: block; width: 100%; height: 3px;
+      background: var(--stack-color, var(--c-accent)); margin-bottom: 7px;
+    }
+    .ending {
+      width: 720px; height: 1020px; box-sizing: border-box;
+      break-before: page; overflow: hidden;
+      padding: 60px 65px;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      position: relative; display: flex; flex-direction: column; justify-content: flex-start;
+    }
+    .ending::before {
+      content: ''; position: absolute; top: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(210, 153, 34, 0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .ending-content { position: relative; z-index: 2; }
+    .ending-title { font-size: 36px; font-weight: 900; color: #ffffff; line-height: 1.1; margin-bottom: 22px; }
+    .award-card {
+      background: linear-gradient(135deg, rgba(210, 153, 34, 0.12), rgba(210, 153, 34, 0.04));
+      border: 1px solid rgba(210, 153, 34, 0.4);
+      border-radius: 12px; padding: 18px; margin: 10px 0 20px 0; break-inside: avoid;
+    }
+    .award-title { font-size: 16px; font-weight: 700; color: #d29922; margin-bottom: 4px; }
+    .award-meta { font-size: 11px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+    .award-desc { font-size: 12.5px; color: var(--c-text); line-height: 1.65; }
+    .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .cert-card { background: var(--c-bg-secondary); border: 1px solid var(--c-border); border-radius: 10px; padding: 13px; break-inside: avoid; }
+    .cert-title { font-size: 13px; font-weight: 700; color: var(--c-text); margin-bottom: 3px; }
+    .cert-count { font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; }
+    .cert-issuer { font-size: 11.5px; color: #7ee787; margin-top: 5px; font-weight: 500; }
+    .contact-card { background: rgba(22, 27, 34, 0.7); border: 1px solid var(--c-border); border-radius: 12px; padding: 18px; margin: 10px 0; }
+    .contact-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(48, 54, 61, 0.5); font-size: 12.5px; }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-label { width: 90px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .contact-value { color: var(--c-text); }
+    .contact-value a { color: var(--c-accent); text-decoration: none; }
+    .ending-footer { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--c-text-muted); text-align: center; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="cover-content">
+      <span class="cover-tag">// Portfolio · 2026</span>
+      <div class="cover-title">Febri Rizki<br><span style="color: var(--c-green-text)">S.Si., M.Si.</span></div>
+      <div class="cover-subtitle">UI/UX Designer &amp; AI Engineer</div>
+      <div class="cover-tagline">
+        Menggabungkan keahlian desain antarmuka pengguna yang intuitif dengan rekayasa kecerdasan buatan yang dapat diproduksi. Fokus membangun produk digital end-to-end yang berdampak — dari riset pengguna hingga deployment model AI di production.
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">$ role</span><span class="cover-meta-value">UI/UX Designer &amp; AI Engineer</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ loc</span><span class="cover-meta-value">Indonesia</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ github</span><span class="cover-meta-value"><a href="https://github.com/febririzki95">github.com/febririzki95</a></span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ github</span><span class="cover-meta-value"><a href="https://github.com/hyperchainpro">github.com/hyperchainpro</a></span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ awards</span><span class="cover-meta-value">Semifinalis Hackathon PIDI Digdaya BI 2026</span></div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <span>// README.md</span>
+      <span>v1.0.0 · 6 repositories</span>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="section-header">
+      <span class="section-tag">// 01 · about</span>
+      <div class="section-title">Tentang Saya</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      Saya seorang UI/UX Designer dan AI Engineer dengan latar belakang akademik Sains (S.Si., M.Si.) serta pengalaman membangun produk digital end-to-end. Saya menggabungkan riset pengguna, desain antarmuka, dan integrasi model AI untuk menghadirkan pengalaman yang intuitif sekaligus didukung teknologi yang andal. Saat ini fokus pada pengembangan platform berbasis AI generatif, MLOps, dan aplikasi mobile cerdas. Pendekatan saya selalu berpusat pada pengguna — setiap keputusan teknis harus melayani kebutuhan pengguna, bukan sebaliknya.
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-title">// Fokus Utama</div>
+        <div class="about-card-content">
+          • UI/UX Design &amp; Design System<br>
+          • AI Engineer &amp; Integrasi LLM<br>
+          • MLOps &amp; Automated Retraining<br>
+          • Frontend Engineering (Next.js, React)<br>
+          • Mobile ML (Flutter + TensorFlow Lite)
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">// Pencapaian</div>
+        <div class="about-card-content">
+          • 6 repositori publik &amp; privat aktif<br>
+          • Semifinalis Hackathon PIDI Digdaya BI 2026<br>
+          • 18 sertifikat Dicoding Academy<br>
+          • 1 sertifikat BDT profesional<br>
+          • Build with Gemini XPRIZE 2026 participant
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top: 26px;">
+      <span class="section-tag">// 02 · tech-stack</span>
+      <div class="section-title">Tech Stack</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      Berikut adalah teknologi yang saya gunakan secara aktif dalam pengembangan produk digital dari sisi UI/UX, frontend, AI/ML, hingga deployment dan DevOps. Setiap proyek di portofolio ini menggunakan kombinasi dari teknologi berikut.
+    </div>
+    <div class="tech-stack-grid">
+      <div class="tech-stack-item" style="--stack-color: #3178c6">TypeScript</div>
+      <div class="tech-stack-item" style="--stack-color: #f1e05a">JavaScript</div>
+      <div class="tech-stack-item" style="--stack-color: #3572A5">Python</div>
+      <div class="tech-stack-item" style="--stack-color: #00B4AB">Dart</div>
+      <div class="tech-stack-item" style="--stack-color: #61dafb">React</div>
+      <div class="tech-stack-item" style="--stack-color: #ffffff">Next.js 16</div>
+      <div class="tech-stack-item" style="--stack-color: #38bdf8">Tailwind CSS 4</div>
+      <div class="tech-stack-item" style="--stack-color: #02569B">Flutter</div>
+      <div class="tech-stack-item" style="--stack-color: #FF6F00">TensorFlow Lite</div>
+      <div class="tech-stack-item" style="--stack-color: #1c69ff">Google Gemini</div>
+      <div class="tech-stack-item" style="--stack-color: #0194E2">MLflow</div>
+      <div class="tech-stack-item" style="--stack-color: #2088FF">GitHub Actions</div>
+      <div class="tech-stack-item" style="--stack-color: #336791">PostgreSQL</div>
+      <div class="tech-stack-item" style="--stack-color: #5a67d8">Prisma ORM</div>
+      <div class="tech-stack-item" style="--stack-color: #00e7ff">Convex</div>
+      <div class="tech-stack-item" style="--stack-color: #2496ED">Docker</div>
+      <div class="tech-stack-item" style="--stack-color: #00C7B7">Vercel</div>
+      <div class="tech-stack-item" style="--stack-color: #f6821f">Cloudflare Pages</div>
+    </div>
+
+    <div class="section-header" style="margin-top: 26px;">
+      <span class="section-tag">// 03 · featured-repositories</span>
+      <div class="section-title">Featured Projects</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      Berikut adalah 6 proyek unggulan yang memperlihatkan kombinasi keahlian UI/UX Design dan AI Engineering — dari platform desain berbasis AI hingga pipeline MLOps otomatis. Setiap entri ditampilkan layaknya halaman repository GitHub dengan badge tech stack, code snippet, dan key metrics.
+    </div>
+
+    <!-- PROJECT 1: HyperChain Pro -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/hyperchainpro">hyperchainpro</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Jun 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">AI-Powered Design Platform with BranchBoard</div>
+        <div class="repo-desc">
+          Platform desain kolaboratif yang mengintegrasikan AI generatif ke dalam workflow UI/UX. BranchBoard memungkinkan desainer membuat variasi desain secara paralel dengan dukungan AI untuk eksplorasi kreatif — mirip dengan Git branching, tetapi untuk aset visual.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #61dafb">React 19</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma</span>
+          <span class="tech-badge" style="--badge-color: #336791">Neon Postgres</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini API</span>
+          <span class="tech-badge" style="--badge-color: #db61a2">dnd-kit</span>
+          <span class="tech-badge" style="--badge-color: #d29922">@mdxeditor</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>BranchBoard</strong>: sistem branching visual untuk eksplorasi desain paralel dengan AI-generated variations</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Drag-and-drop design canvas dengan dnd-kit untuk komponen reusable</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>MDX editor untuk dokumentasi desain inline yang terintegrasi</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Serverless Neon Postgres + Prisma untuk skala global tanpa overhead</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Generative AI assistant untuk suggestion komponen &amp; layout alternatif</span></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">12+</div><div class="stat-label">Komponen UI</div></div>
+          <div class="stat-item"><div class="stat-value">AI</div><div class="stat-label">Powered</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.0</div><div class="stat-label">Versi</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/hyperchainpro</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: PathMentor AI -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/pathmentor-ai">pathmentor-ai</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Aug 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Adaptive AI Tutor for High-School Students</div>
+        <div class="repo-desc">
+          Tutor AI adaptif yang dipersonalisasi untuk siswa SMA, dibangun untuk hackathon <strong>Build with Gemini XPRIZE 2026</strong>. Menggunakan pendekatan Socratic untuk membimbing siswa melalui materi pelajaran dengan kuis otomatis, smart flashcards, essay review, dan math solver.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #336791">PostgreSQL</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini 2.0 Flash</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #ef4444">Framer Motion</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">Zustand</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Adaptive Learning Profile</strong>: onboarding menangkap grade, target exam, mata pelajaran, dan daily goal</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>AI Tutor Chat</strong>: chat powered Gemini dengan pendekatan Socratic yang menyesuaikan level pemahaman</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Flashcards</strong>: spaced repetition dengan algoritma SM-2 untuk retensi jangka panjang</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Essay Review</strong>: AI scoring dengan rubric-based feedback untuk penulisan esai</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Math Solver</strong>: penyelesaian langkah demi langkah untuk soal matematika</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>12 Achievements</strong>: sistem gamifikasi untuk menjaga motivasi belajar</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Auto-generated quiz by Gemini AI per subject + topic</span>
+<span class="code-keyword">const</span> <span class="code-property">response</span> = <span class="code-keyword">await</span> gemini.chat.completions.<span class="code-property">create</span>({
+  <span class="code-property">model</span>: <span class="code-string">'gemini-2.0-flash'</span>,
+  <span class="code-property">messages</span>: [{ <span class="code-property">role</span>: <span class="code-string">'system'</span>, <span class="code-property">content</span>: socraticPrompt }],
+});</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Achievements</div></div>
+          <div class="stat-item"><div class="stat-value">6+</div><div class="stat-label">Fitur AI</div></div>
+          <div class="stat-item"><div class="stat-value">XPRIZE</div><div class="stat-label">Hackathon</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/pathmentor-ai</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3: DapurMind AI -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/dapurmindai">dapurmindai</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">AI-Powered Cooking Assistant</div>
+        <div class="repo-desc">
+          Asisten masak berbasis AI yang membantu pengguna menemukan resep, menghitung nutrisi, dan memberikan saran memasak berdasarkan bahan yang tersedia. Mengintegrasikan Convex untuk real-time backend dan Cloudflare Pages untuk deployment edge global.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #00e7ff">Convex</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini AI</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f6821f">Cloudflare Pages</span>
+          <span class="tech-badge" style="--badge-color: #ef4444">Hook Form</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Recipe Generation</strong>: AI menghasilkan resep berdasarkan bahan yang tersedia di dapur pengguna</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Nutrition Tracking</strong>: integrasi Gemini AI untuk analisis nutrisi otomatis</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Real-time Sync</strong>: Convex backend untuk update resep real-time lintas perangkat</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Edge Deployment</strong>: Cloudflare Pages dengan OpenNext untuk performa global</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Forms</strong>: Hook Form + Zod untuk input resep yang valid &amp; terstruktur</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Edge deployment via OpenNext → Cloudflare Pages</span>
+<span class="code-property">scripts</span>: {
+  <span class="code-property">build</span>: <span class="code-string">'next build'</span>,
+  <span class="code-property">build:cloudflare</span>: <span class="code-string">'opennextjs-cloudflare build'</span>,
+  <span class="code-property">pages:deploy</span>: <span class="code-string">'wrangler pages deploy .open-next/assets'</span>
+}</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">Real</div><div class="stat-label">Time Sync</div></div>
+          <div class="stat-item"><div class="stat-value">Edge</div><div class="stat-label">Global Deploy</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.0</div><div class="stat-label">Versi</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/dapurmindai</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 4: CR AutoPilot -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/cr-autopilot">cr-autopilot</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Aug 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Automated ContentRewards Campaign Pipeline</div>
+        <div class="repo-desc">
+          Sistem otomatisasi end-to-end untuk ContentRewards: scraper campaign, video editor otomatis, dan social poster ke 34 platform sekaligus. Dirancang untuk kreator konten yang ingin memaksimalkan distribusi konten tanpa intervensi manual.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #db61a2">dnd-kit</span>
+          <span class="tech-badge" style="--badge-color: #d29922">@mdxeditor</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">Playwright MCP</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Campaign Scraper</strong>: otomatis mengambil data campaign terbaru dari ContentRewards</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Video Editor</strong>: editing video otomatis berbasis template dengan MDX editor untuk script</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>34-Platform Social Poster</strong>: distribusi konten ke 34 platform sekaligus (YouTube, TikTok, Instagram, dll.)</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Playwright MCP</strong>: browser automation untuk posting ke platform tanpa API resmi</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Standalone Build</strong>: Next.js standalone output untuk deployment Docker ringan</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Standalone build + custom server for long-running workers</span>
+<span class="code-property">build</span>: <span class="code-string">'next build &amp;&amp; cp -r .next/static .next/standalone/.next/'</span>,
+<span class="code-property">start</span>: <span class="code-string">'NODE_ENV=production bun .next/standalone/server.js'</span></div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">34</div><div class="stat-label">Platform</div></div>
+          <div class="stat-item"><div class="stat-value">Auto</div><div class="stat-label">Pipeline</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.1</div><div class="stat-label">Versi</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/cr-autopilot</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 5: Food Recognizer -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/food_recognizer_ci_check">food_recognizer</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">Dart · Flutter · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Flutter ML App · 2023 Food Categories</div>
+        <div class="repo-desc">
+          Aplikasi Flutter yang menggunakan Machine Learning (TensorFlow Lite) untuk mengidentifikasi jenis makanan dari foto. Dapat mengenali 2.023 kategori makanan dengan inferensi pada background thread (Isolate) untuk performa optimal, terintegrasi dengan MealDB API &amp; Gemini AI untuk informasi nutrisi.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #02569B">Flutter</span>
+          <span class="tech-badge" style="--badge-color: #00B4AB">Dart</span>
+          <span class="tech-badge" style="--badge-color: #FF6F00">TensorFlow Lite</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini AI</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">MealDB API</span>
+          <span class="tech-badge" style="--badge-color: #f97316">image_cropper</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">GitHub Actions</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>2023 Food Categories</strong>: model TFLite dapat mengenali 2.023 jenis makanan dengan akurasi tinggi</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Background Thread Inference</strong>: TFLite berjalan di Isolate untuk menjaga UI tetap responsif</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Multi-source Intelligence</strong>: MealDB untuk resep &amp; bahan, Gemini AI untuk nutrisi &amp; deskripsi</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Image Picker</strong>: kamera + galeri + image_cropper untuk hasil optimal</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Clean Architecture</strong>: pemisahan models/services/screens/widgets/utils yang modular</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Background thread ML inference</span>
+<span class="code-keyword">Future</span>&lt;<span class="code-property">FoodPrediction</span>&gt; <span class="code-property">predict</span>(<span class="code-property">File</span> image) <span class="code-keyword">async</span> {
+  <span class="code-keyword">return</span> <span class="code-keyword">await</span> compute(_runInference, image.path);
+  <span class="code-comment">// TFLite via Isolate — no UI freeze</span>
+}</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">2023</div><div class="stat-label">Kategori</div></div>
+          <div class="stat-item"><div class="stat-value">224²</div><div class="stat-label">Input Size</div></div>
+          <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Ext APIs</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/food_recognizer_ci_check</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 6: Workflow-CI MLOps -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/Workflow-CI">Workflow-CI</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">Python · MLflow · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Automated ML Model Retraining with MLflow + GitHub Actions</div>
+        <div class="repo-desc">
+          Pipeline MLOps yang mengotomatisasi proses retraining model machine learning menggunakan MLflow Project dan GitHub Actions CI. Menggunakan dataset Breast Cancer Wisconsin untuk proof-of-concept, dengan deployment Docker Hub untuk reproducibility lingkungan.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #3572A5">Python</span>
+          <span class="tech-badge" style="--badge-color: #0194E2">MLflow</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">GitHub Actions</span>
+          <span class="tech-badge" style="--badge-color: #2496ED">Docker</span>
+          <span class="tech-badge" style="--badge-color: #ff6b6b">Conda</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">scikit-learn</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>MLflow Project Spec</strong>: file MLproject terstandar untuk reproducibility model training</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>CI/CD Pipeline</strong>: GitHub Actions workflow otomatis menjalankan <code>mlflow run MLProject --env-manager=local</code></span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Environment Reproducibility</strong>: conda.yaml + Docker image untuk isolasi dependencies</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Modular Scripts</strong>: modelling.py terpisah untuk training, automate_febri.py untuk preprocessing</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Docker Hub Integration</strong>: image dipublikasikan untuk deployment ke environment lain</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment"># .github/workflows/workflow_ci.yml</span>
+<span class="code-property">name</span>: <span class="code-string">ML Retraining CI</span>
+<span class="code-property">on</span>:
+  <span class="code-property">schedule</span>: [{ <span class="code-property">cron</span>: <span class="code-string">'0 0 * * 0'</span> }]  <span class="code-comment"># weekly</span>
+  <span class="code-property">workflow_dispatch</span>:
+<span class="code-property">jobs</span>:
+  <span class="code-property">retrain</span>:
+    <span class="code-property">runs-on</span>: <span class="code-string">ubuntu-latest</span>
+    <span class="code-property">steps</span>:
+      - <span class="code-keyword">run</span>: mlflow run MLProject --env-manager=local</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">Auto</div><div class="stat-label">Retraining</div></div>
+          <div class="stat-item"><div class="stat-value">CI/CD</div><div class="stat-label">Pipeline</div></div>
+          <div class="stat-item"><div class="stat-value">Docker</div><div class="stat-label">Reproducible</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/Workflow-CI</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Ending Page -->
+  <div class="ending">
+    <div class="ending-content">
+      <span class="cover-tag">// 04 · recognition · contact</span>
+      <div class="ending-title">Penghargaan &amp;<br>Kontak</div>
+
+      <div class="award-card">
+        <div class="award-title">★ Semifinalis Hackathon PIDI Digdaya BI 2026</div>
+        <div class="award-meta">Bank Indonesia · 2026 · Nasional</div>
+        <div class="award-desc">
+          Bersama tim, mengembangkan solusi digital inovatif berbasis data dan AI untuk mendukung transformasi digital di ekosistem Bank Indonesia. Lolos seleksi tahap preliminary dan masuk 20 tim teratas nasional dari ratusan peserta.
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 18px; margin-bottom: 10px;">
+        <span class="section-tag">// sertifikasi</span>
+        <div class="section-title" style="font-size: 18px;">Sertifikasi</div>
+      </div>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-title">Machine Learning &amp; AI</div>
+          <div class="cert-count">4 sertifikat</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Frontend &amp; UI/UX</div>
+          <div class="cert-count">5 sertifikat</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Backend &amp; Cloud</div>
+          <div class="cert-count">5 sertifikat</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Mobile Development</div>
+          <div class="cert-count">4 sertifikat</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card" style="grid-column: 1 / -1;">
+          <div class="cert-title">Big Data &amp; Data Analytics Training (BDT)</div>
+          <div class="cert-count">1 sertifikat profesional</div>
+          <div class="cert-issuer">BDT Program</div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 18px; margin-bottom: 10px;">
+        <span class="section-tag">// kontak</span>
+        <div class="section-title" style="font-size: 18px;">Mari Terhubung</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-row"><span class="contact-label">$ email</span><span class="contact-value">[EMAIL_ANDA]@email.com</span></div>
+        <div class="contact-row"><span class="contact-label">$ phone</span><span class="contact-value">[+62 8xx-xxxx-xxxx]</span></div>
+        <div class="contact-row"><span class="contact-label">$ location</span><span class="contact-value">[Kota], Indonesia</span></div>
+        <div class="contact-row"><span class="contact-label">$ github</span><span class="contact-value"><a href="https://github.com/febririzki95">github.com/febririzki95</a></span></div>
+        <div class="contact-row"><span class="contact-label">$ github</span><span class="contact-value"><a href="https://github.com/hyperchainpro">github.com/hyperchainpro</a></span></div>
+        <div class="contact-row"><span class="contact-label">$ linkedin</span><span class="contact-value"><a href="#">[LINKEDIN_URL]</a></span></div>
+      </div>
+
+      <div class="ending-footer">
+        // Terima kasih telah meninjau portofolio saya.<br>// Mari ciptakan sesuatu yang berdampak bersama.
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

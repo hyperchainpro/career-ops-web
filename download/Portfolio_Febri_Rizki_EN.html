@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio - Febri Rizki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: 720px 1020px; margin: 0; }
+    :root {
+      --c-bg: #0d1117;
+      --c-bg-secondary: #161b22;
+      --c-bg-tertiary: #21262d;
+      --c-border: #30363d;
+      --c-text: #c9d1d9;
+      --c-text-secondary: #8b949e;
+      --c-text-muted: #6e7681;
+      --c-accent: #58a6ff;
+      --c-green: #238636;
+      --c-green-light: #2ea043;
+      --c-green-text: #7ee787;
+      --c-yellow: #d29922;
+      --c-orange: #db6d28;
+      --c-purple: #8957e5;
+      --c-pink: #db61a2;
+      --c-red: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      margin: 0; padding: 0; width: 720px;
+      background: var(--c-bg); color: var(--c-text);
+      font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.5;
+    }
+    @media screen {
+      html { height: auto; display: flex; justify-content: center; background: #222; }
+      body { transform-origin: top center; margin: 20px auto; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    }
+    .cover {
+      width: 720px; height: 1020px; box-sizing: border-box;
+      break-after: page; overflow: hidden;
+      padding: 70px 65px;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      position: relative; display: flex; flex-direction: column; justify-content: center;
+    }
+    .cover::before {
+      content: ''; position: absolute; top: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(35, 134, 54, 0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cover::after {
+      content: ''; position: absolute; bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(88, 166, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cover-content { position: relative; z-index: 2; }
+    .cover-tag {
+      display: inline-block; padding: 4px 12px;
+      background: rgba(35, 134, 54, 0.2); border: 1px solid #238636;
+      border-radius: 20px; color: #7ee787; font-size: 11px;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .cover-title {
+      font-size: 56px; font-weight: 900; line-height: 1.05;
+      letter-spacing: -1.5px; color: #ffffff; margin-bottom: 28px;
+    }
+    .cover-subtitle { font-size: 22px; color: var(--c-accent); font-weight: 600; margin-bottom: 44px; }
+    .cover-tagline {
+      font-size: 14.5px; color: var(--c-text-secondary); line-height: 1.7;
+      max-width: 540px; margin-bottom: 48px;
+    }
+    .cover-meta {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 22px; background: rgba(22, 27, 34, 0.7);
+      border: 1px solid var(--c-border); border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--c-text-secondary);
+    }
+    .cover-meta-row { display: flex; align-items: center; gap: 10px; }
+    .cover-meta-label { color: var(--c-text-muted); min-width: 80px; }
+    .cover-meta-value { color: var(--c-text); }
+    .cover-meta-value a { color: var(--c-accent); text-decoration: none; }
+    .cover-bottom {
+      position: absolute; bottom: 36px; left: 65px; right: 65px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace;
+    }
+    .main-content { padding: 50px 55px 40px 55px; }
+    .section-header { break-after: avoid; break-inside: avoid; margin-top: 24px; margin-bottom: 14px; }
+    .section-header:first-child { margin-top: 0; }
+    .section-tag {
+      display: inline-block; padding: 2px 10px;
+      background: rgba(88, 166, 255, 0.15); border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 12px; color: var(--c-accent); font-size: 10px;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
+    }
+    .section-title {
+      font-size: 24px; font-weight: 800; color: #ffffff;
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .section-divider {
+      width: 60px; height: 3px; background: var(--c-green);
+      border-radius: 2px; margin-bottom: 14px;
+    }
+    .body-text {
+      font-size: 12.5px; color: var(--c-text-secondary);
+      line-height: 1.7; margin-bottom: 10px;
+    }
+    .project-card {
+      break-inside: avoid; margin-bottom: 14px;
+      background: var(--c-bg-secondary); border: 1px solid var(--c-border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .repo-header {
+      padding: 14px 18px; border-bottom: 1px solid var(--c-border);
+      background: var(--c-bg-tertiary);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .repo-title { display: flex; align-items: center; gap: 8px; }
+    .repo-icon { width: 16px; height: 16px; fill: var(--c-text-muted); }
+    .repo-name { font-size: 15px; font-weight: 700; color: var(--c-accent); text-decoration: none; }
+    .visibility-badge {
+      display: inline-block; padding: 2px 8px; border: 1px solid var(--c-border);
+      border-radius: 12px; font-size: 10.5px; color: var(--c-text-muted);
+      font-weight: 500; font-family: 'JetBrains Mono', monospace; text-transform: capitalize;
+    }
+    .repo-updated { font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; }
+    .repo-body { padding: 18px; }
+    .repo-tagline { font-size: 14px; color: var(--c-text); margin-bottom: 10px; font-weight: 600; }
+    .repo-desc { font-size: 12.5px; color: var(--c-text-secondary); line-height: 1.65; margin-bottom: 14px; }
+    .tech-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .tech-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--c-border); border-radius: 12px;
+      font-size: 10.5px; color: var(--c-text);
+      font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    }
+    .tech-badge::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--badge-color, var(--c-text-muted));
+    }
+    .features { margin-top: 8px; margin-bottom: 12px; }
+    .feature {
+      display: flex; align-items: flex-start; gap: 8px;
+      margin-bottom: 5px; font-size: 12px; color: var(--c-text); line-height: 1.55;
+    }
+    .feature-icon { flex-shrink: 0; width: 14px; height: 14px; color: var(--c-green-text); font-size: 13px; line-height: 1.3; font-weight: 700; }
+    .code-block {
+      background: #010409; border: 1px solid var(--c-border); border-radius: 8px;
+      padding: 12px 14px; font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; line-height: 1.6; color: var(--c-text);
+      margin: 10px 0; overflow-x: hidden; white-space: pre-wrap; word-break: break-word;
+    }
+    .code-comment { color: var(--c-text-muted); }
+    .code-keyword { color: #ff7b72; }
+    .code-string { color: #a5d6ff; }
+    .code-property { color: #79c0ff; }
+    .code-number { color: #d2a8ff; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+    .stat-item {
+      background: var(--c-bg-tertiary); border: 1px solid var(--c-border);
+      border-radius: 8px; padding: 10px; text-align: center;
+    }
+    .stat-value { font-size: 19px; font-weight: 800; color: #7ee787; font-family: 'JetBrains Mono', monospace; }
+    .stat-label { font-size: 10.5px; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+    .repo-url {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 12px; background: rgba(35, 134, 54, 0.1);
+      border: 1px solid rgba(35, 134, 54, 0.3); border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: #7ee787; margin-top: 8px;
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .about-card { background: var(--c-bg-secondary); border: 1px solid var(--c-border); border-radius: 10px; padding: 16px; }
+    .about-card-title { font-size: 12px; font-weight: 700; color: var(--c-accent); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+    .about-card-content { font-size: 12px; color: var(--c-text-secondary); line-height: 1.7; }
+    .tech-stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 10px; }
+    .tech-stack-item {
+      background: var(--c-bg-tertiary); border: 1px solid var(--c-border);
+      border-radius: 6px; padding: 9px; text-align: center;
+      font-size: 11px; color: var(--c-text); font-weight: 500; position: relative; overflow: hidden;
+    }
+    .tech-stack-item::before {
+      content: ''; display: block; width: 100%; height: 3px;
+      background: var(--stack-color, var(--c-accent)); margin-bottom: 7px;
+    }
+    .ending {
+      width: 720px; height: 1020px; box-sizing: border-box;
+      break-before: page; overflow: hidden;
+      padding: 60px 65px;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      position: relative; display: flex; flex-direction: column; justify-content: flex-start;
+    }
+    .ending::before {
+      content: ''; position: absolute; top: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(210, 153, 34, 0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .ending-content { position: relative; z-index: 2; }
+    .ending-title { font-size: 36px; font-weight: 900; color: #ffffff; line-height: 1.1; margin-bottom: 22px; }
+    .award-card {
+      background: linear-gradient(135deg, rgba(210, 153, 34, 0.12), rgba(210, 153, 34, 0.04));
+      border: 1px solid rgba(210, 153, 34, 0.4);
+      border-radius: 12px; padding: 18px; margin: 10px 0 20px 0; break-inside: avoid;
+    }
+    .award-title { font-size: 16px; font-weight: 700; color: #d29922; margin-bottom: 4px; }
+    .award-meta { font-size: 11px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+    .award-desc { font-size: 12.5px; color: var(--c-text); line-height: 1.65; }
+    .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .cert-card { background: var(--c-bg-secondary); border: 1px solid var(--c-border); border-radius: 10px; padding: 13px; break-inside: avoid; }
+    .cert-title { font-size: 13px; font-weight: 700; color: var(--c-text); margin-bottom: 3px; }
+    .cert-count { font-size: 11.5px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; }
+    .cert-issuer { font-size: 11.5px; color: #7ee787; margin-top: 5px; font-weight: 500; }
+    .contact-card { background: rgba(22, 27, 34, 0.7); border: 1px solid var(--c-border); border-radius: 12px; padding: 18px; margin: 10px 0; }
+    .contact-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(48, 54, 61, 0.5); font-size: 12.5px; }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-label { width: 90px; color: var(--c-text-muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .contact-value { color: var(--c-text); }
+    .contact-value a { color: var(--c-accent); text-decoration: none; }
+    .ending-footer { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--c-text-muted); text-align: center; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="cover-content">
+      <span class="cover-tag">// Portfolio · 2026</span>
+      <div class="cover-title">Febri Rizki<br><span style="color: var(--c-green-text)">S.Si., M.Si.</span></div>
+      <div class="cover-subtitle">UI/UX Designer &amp; AI Engineer</div>
+      <div class="cover-tagline">
+        Combining intuitive user interface design expertise with production-grade artificial intelligence engineering. Focused on building impactful end-to-end digital products — from user research to AI model deployment in production.
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">$ role</span><span class="cover-meta-value">UI/UX Designer &amp; AI Engineer</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ loc</span><span class="cover-meta-value">Indonesia</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ github</span><span class="cover-meta-value"><a href="https://github.com/febririzki95">github.com/febririzki95</a></span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ github</span><span class="cover-meta-value"><a href="https://github.com/hyperchainpro">github.com/hyperchainpro</a></span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">$ awards</span><span class="cover-meta-value">Semifinalist, Hackathon PIDI Digdaya BI 2026</span></div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <span>// README.md</span>
+      <span>v1.0.0 · 6 repositories</span>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="section-header">
+      <span class="section-tag">// 01 · about</span>
+      <div class="section-title">About Me</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      I am a UI/UX Designer and AI Engineer with an academic background in Science (S.Si., M.Si.) and hands-on experience building end-to-end digital products. I combine user research, interface design, and AI model integration to deliver experiences that are both intuitive and backed by reliable technology. Currently focused on building generative AI-powered platforms, MLOps, and intelligent mobile applications. My approach is always user-centric — every technical decision should serve user needs, not the other way around.
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-title">// Core Focus</div>
+        <div class="about-card-content">
+          • UI/UX Design &amp; Design System<br>
+          • AI Engineering &amp; LLM Integration<br>
+          • MLOps &amp; Automated Retraining<br>
+          • Frontend Engineering (Next.js, React)<br>
+          • Mobile ML (Flutter + TensorFlow Lite)
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">// Achievements</div>
+        <div class="about-card-content">
+          • 6 active public &amp; private repositories<br>
+          • Semifinalist, Hackathon PIDI Digdaya BI 2026<br>
+          • 18 Dicoding Academy certificates<br>
+          • 1 professional BDT certificate<br>
+          • Build with Gemini XPRIZE 2026 participant
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top: 26px;">
+      <span class="section-tag">// 02 · tech-stack</span>
+      <div class="section-title">Tech Stack</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      Below are the technologies I actively use in building digital products across UI/UX, frontend, AI/ML, and deployment &amp; DevOps. Every project in this portfolio uses a combination of the technologies listed below.
+    </div>
+    <div class="tech-stack-grid">
+      <div class="tech-stack-item" style="--stack-color: #3178c6">TypeScript</div>
+      <div class="tech-stack-item" style="--stack-color: #f1e05a">JavaScript</div>
+      <div class="tech-stack-item" style="--stack-color: #3572A5">Python</div>
+      <div class="tech-stack-item" style="--stack-color: #00B4AB">Dart</div>
+      <div class="tech-stack-item" style="--stack-color: #61dafb">React</div>
+      <div class="tech-stack-item" style="--stack-color: #ffffff">Next.js 16</div>
+      <div class="tech-stack-item" style="--stack-color: #38bdf8">Tailwind CSS 4</div>
+      <div class="tech-stack-item" style="--stack-color: #02569B">Flutter</div>
+      <div class="tech-stack-item" style="--stack-color: #FF6F00">TensorFlow Lite</div>
+      <div class="tech-stack-item" style="--stack-color: #1c69ff">Google Gemini</div>
+      <div class="tech-stack-item" style="--stack-color: #0194E2">MLflow</div>
+      <div class="tech-stack-item" style="--stack-color: #2088FF">GitHub Actions</div>
+      <div class="tech-stack-item" style="--stack-color: #336791">PostgreSQL</div>
+      <div class="tech-stack-item" style="--stack-color: #5a67d8">Prisma ORM</div>
+      <div class="tech-stack-item" style="--stack-color: #00e7ff">Convex</div>
+      <div class="tech-stack-item" style="--stack-color: #2496ED">Docker</div>
+      <div class="tech-stack-item" style="--stack-color: #00C7B7">Vercel</div>
+      <div class="tech-stack-item" style="--stack-color: #f6821f">Cloudflare Pages</div>
+    </div>
+
+    <div class="section-header" style="margin-top: 26px;">
+      <span class="section-tag">// 03 · featured-repositories</span>
+      <div class="section-title">Featured Projects</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="body-text">
+      Below are 6 featured projects showcasing the combination of UI/UX Design and AI Engineering expertise — from AI-powered design platforms to automated MLOps pipelines. Each entry is presented like a GitHub repository page with tech stack badges, code snippets, and key metrics.
+    </div>
+
+    <!-- PROJECT 1: HyperChain Pro -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/hyperchainpro">hyperchainpro</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Jun 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">AI-Powered Design Platform with BranchBoard</div>
+        <div class="repo-desc">
+          A collaborative design platform that integrates generative AI into the UI/UX workflow. BranchBoard allows designers to create parallel design variations with AI-assisted creative exploration — similar to Git branching, but for visual assets.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #61dafb">React 19</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma</span>
+          <span class="tech-badge" style="--badge-color: #336791">Neon Postgres</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini API</span>
+          <span class="tech-badge" style="--badge-color: #db61a2">dnd-kit</span>
+          <span class="tech-badge" style="--badge-color: #d29922">@mdxeditor</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>BranchBoard</strong>: visual branching system for parallel design exploration with AI-generated variations</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Drag-and-drop design canvas with dnd-kit for reusable components</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>MDX editor for integrated inline design documentation</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Serverless Neon Postgres + Prisma for global scale without overhead</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span>Generative AI assistant for component &amp; layout alternative suggestions</span></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">12+</div><div class="stat-label">UI Components</div></div>
+          <div class="stat-item"><div class="stat-value">AI</div><div class="stat-label">Powered</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.0</div><div class="stat-label">Version</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/hyperchainpro</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: PathMentor AI -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/pathmentor-ai">pathmentor-ai</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Aug 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Adaptive AI Tutor for High-School Students</div>
+        <div class="repo-desc">
+          A personalized adaptive AI tutor for high-school students, built for the <strong>Build with Gemini XPRIZE 2026</strong> hackathon. Uses a Socratic approach to guide students through course material with auto-generated quizzes, smart flashcards, essay review, and a math solver.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #336791">PostgreSQL</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini 2.0 Flash</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #ef4444">Framer Motion</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">Zustand</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Adaptive Learning Profile</strong>: onboarding captures grade, target exam, subjects, and daily goal</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>AI Tutor Chat</strong>: Gemini-powered chat with Socratic approach that adapts to student understanding level</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Flashcards</strong>: spaced repetition with SM-2 algorithm for long-term retention</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Essay Review</strong>: AI scoring with rubric-based feedback for essay writing</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Math Solver</strong>: step-by-step worked solutions for math problems</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>12 Achievements</strong>: gamification system to keep learning motivation high</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Auto-generated quiz by Gemini AI per subject + topic</span>
+<span class="code-keyword">const</span> <span class="code-property">response</span> = <span class="code-keyword">await</span> gemini.chat.completions.<span class="code-property">create</span>({
+  <span class="code-property">model</span>: <span class="code-string">'gemini-2.0-flash'</span>,
+  <span class="code-property">messages</span>: [{ <span class="code-property">role</span>: <span class="code-string">'system'</span>, <span class="code-property">content</span>: socraticPrompt }],
+});</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Achievements</div></div>
+          <div class="stat-item"><div class="stat-value">6+</div><div class="stat-label">AI Features</div></div>
+          <div class="stat-item"><div class="stat-value">XPRIZE</div><div class="stat-label">Hackathon</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/pathmentor-ai</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3: DapurMind AI -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/dapurmindai">dapurmindai</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">AI-Powered Cooking Assistant</div>
+        <div class="repo-desc">
+          An AI-powered cooking assistant that helps users discover recipes, calculate nutrition, and get cooking suggestions based on available ingredients. Integrates Convex for real-time backend and Cloudflare Pages for global edge deployment.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #00e7ff">Convex</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini AI</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f6821f">Cloudflare Pages</span>
+          <span class="tech-badge" style="--badge-color: #ef4444">Hook Form</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Recipe Generation</strong>: AI generates recipes based on ingredients available in the user's kitchen</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Nutrition Tracking</strong>: Gemini AI integration for automatic nutrition analysis</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Real-time Sync</strong>: Convex backend for real-time recipe updates across devices</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Edge Deployment</strong>: Cloudflare Pages with OpenNext for global performance</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Forms</strong>: Hook Form + Zod for valid &amp; structured recipe input</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Edge deployment via OpenNext → Cloudflare Pages</span>
+<span class="code-property">scripts</span>: {
+  <span class="code-property">build</span>: <span class="code-string">'next build'</span>,
+  <span class="code-property">build:cloudflare</span>: <span class="code-string">'opennextjs-cloudflare build'</span>,
+  <span class="code-property">pages:deploy</span>: <span class="code-string">'wrangler pages deploy .open-next/assets'</span>
+}</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">Real</div><div class="stat-label">Time Sync</div></div>
+          <div class="stat-item"><div class="stat-value">Edge</div><div class="stat-label">Global Deploy</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.0</div><div class="stat-label">Version</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/dapurmindai</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 4: CR AutoPilot -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/cr-autopilot">cr-autopilot</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">TypeScript · Aug 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Automated ContentRewards Campaign Pipeline</div>
+        <div class="repo-desc">
+          An end-to-end automation system for ContentRewards: campaign scraper, automated video editor, and a social poster to 34 platforms simultaneously. Designed for content creators who want to maximize content distribution without manual intervention.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind 4</span>
+          <span class="tech-badge" style="--badge-color: #f97316">shadcn/ui</span>
+          <span class="tech-badge" style="--badge-color: #db61a2">dnd-kit</span>
+          <span class="tech-badge" style="--badge-color: #d29922">@mdxeditor</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">Playwright MCP</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Campaign Scraper</strong>: automatically fetches latest campaign data from ContentRewards</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Video Editor</strong>: automated template-based video editing with MDX editor for scripts</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>34-Platform Social Poster</strong>: distributes content to 34 platforms at once (YouTube, TikTok, Instagram, etc.)</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Playwright MCP</strong>: browser automation for posting to platforms without official APIs</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Standalone Build</strong>: Next.js standalone output for lightweight Docker deployment</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Standalone build + custom server for long-running workers</span>
+<span class="code-property">build</span>: <span class="code-string">'next build &amp;&amp; cp -r .next/static .next/standalone/.next/'</span>,
+<span class="code-property">start</span>: <span class="code-string">'NODE_ENV=production bun .next/standalone/server.js'</span></div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">34</div><div class="stat-label">Platforms</div></div>
+          <div class="stat-item"><div class="stat-value">Auto</div><div class="stat-label">Pipeline</div></div>
+          <div class="stat-item"><div class="stat-value">0.2.1</div><div class="stat-label">Version</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/cr-autopilot</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 5: Food Recognizer -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/food_recognizer_ci_check">food_recognizer</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">Dart · Flutter · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Flutter ML App · 2023 Food Categories</div>
+        <div class="repo-desc">
+          A Flutter app that uses Machine Learning (TensorFlow Lite) to identify food types from photos. Can recognize 2,023 food categories with inference running on a background thread (Isolate) for optimal performance, integrated with MealDB API &amp; Gemini AI for nutrition information.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #02569B">Flutter</span>
+          <span class="tech-badge" style="--badge-color: #00B4AB">Dart</span>
+          <span class="tech-badge" style="--badge-color: #FF6F00">TensorFlow Lite</span>
+          <span class="tech-badge" style="--badge-color: #1c69ff">Gemini AI</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">MealDB API</span>
+          <span class="tech-badge" style="--badge-color: #f97316">image_cropper</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">GitHub Actions</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>2023 Food Categories</strong>: TFLite model can recognize 2,023 food types with high accuracy</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Background Thread Inference</strong>: TFLite runs in Isolate to keep UI responsive</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Multi-source Intelligence</strong>: MealDB for recipes &amp; ingredients, Gemini AI for nutrition &amp; descriptions</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Smart Image Picker</strong>: camera + gallery + image_cropper for optimal results</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Clean Architecture</strong>: modular separation of models/services/screens/widgets/utils</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Background thread ML inference</span>
+<span class="code-keyword">Future</span>&lt;<span class="code-property">FoodPrediction</span>&gt; <span class="code-property">predict</span>(<span class="code-property">File</span> image) <span class="code-keyword">async</span> {
+  <span class="code-keyword">return</span> <span class="code-keyword">await</span> compute(_runInference, image.path);
+  <span class="code-comment">// TFLite via Isolate — no UI freeze</span>
+}</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">2023</div><div class="stat-label">Categories</div></div>
+          <div class="stat-item"><div class="stat-value">224²</div><div class="stat-label">Input Size</div></div>
+          <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Ext APIs</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/food_recognizer_ci_check</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 6: Workflow-CI MLOps -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/febririzki95/Workflow-CI">Workflow-CI</a>
+          <span class="visibility-badge">Private</span>
+        </div>
+        <div class="repo-updated">Python · MLflow · Jul 2026</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Automated ML Model Retraining with MLflow + GitHub Actions</div>
+        <div class="repo-desc">
+          An MLOps pipeline that automates the machine learning model retraining process using MLflow Project and GitHub Actions CI. Uses the Breast Cancer Wisconsin dataset as a proof-of-concept, with Docker Hub deployment for environment reproducibility.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #3572A5">Python</span>
+          <span class="tech-badge" style="--badge-color: #0194E2">MLflow</span>
+          <span class="tech-badge" style="--badge-color: #2088FF">GitHub Actions</span>
+          <span class="tech-badge" style="--badge-color: #2496ED">Docker</span>
+          <span class="tech-badge" style="--badge-color: #ff6b6b">Conda</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">scikit-learn</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>MLflow Project Spec</strong>: standardized MLproject file for model training reproducibility</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>CI/CD Pipeline</strong>: GitHub Actions workflow automatically runs <code>mlflow run MLProject --env-manager=local</code></span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Environment Reproducibility</strong>: conda.yaml + Docker image for dependency isolation</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Modular Scripts</strong>: separate modelling.py for training, automate_febri.py for preprocessing</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Docker Hub Integration</strong>: image published for deployment to other environments</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment"># .github/workflows/workflow_ci.yml</span>
+<span class="code-property">name</span>: <span class="code-string">ML Retraining CI</span>
+<span class="code-property">on</span>:
+  <span class="code-property">schedule</span>: [{ <span class="code-property">cron</span>: <span class="code-string">'0 0 * * 0'</span> }]  <span class="code-comment"># weekly</span>
+  <span class="code-property">workflow_dispatch</span>:
+<span class="code-property">jobs</span>:
+  <span class="code-property">retrain</span>:
+    <span class="code-property">runs-on</span>: <span class="code-string">ubuntu-latest</span>
+    <span class="code-property">steps</span>:
+      - <span class="code-keyword">run</span>: mlflow run MLProject --env-manager=local</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">Auto</div><div class="stat-label">Retraining</div></div>
+          <div class="stat-item"><div class="stat-value">CI/CD</div><div class="stat-label">Pipeline</div></div>
+          <div class="stat-item"><div class="stat-value">Docker</div><div class="stat-label">Reproducible</div></div>
+        </div>
+        <div class="repo-url"><span>→</span><span>github.com/febririzki95/Workflow-CI</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Ending Page -->
+  <div class="ending">
+    <div class="ending-content">
+      <span class="cover-tag">// 04 · recognition · contact</span>
+      <div class="ending-title">Awards &amp;<br>Contact</div>
+
+      <div class="award-card">
+        <div class="award-title">★ Semifinalist, Hackathon PIDI Digdaya BI 2026</div>
+        <div class="award-meta">Bank Indonesia · 2026 · National</div>
+        <div class="award-desc">
+          Collaborated with a team to develop an innovative data- and AI-driven digital solution supporting Bank Indonesia's digital transformation agenda. Passed the preliminary selection round and ranked among the top 20 teams nationally out of hundreds of participating teams.
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 18px; margin-bottom: 10px;">
+        <span class="section-tag">// certifications</span>
+        <div class="section-title" style="font-size: 18px;">Certifications</div>
+      </div>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-title">Machine Learning &amp; AI</div>
+          <div class="cert-count">4 certificates</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Frontend &amp; UI/UX</div>
+          <div class="cert-count">5 certificates</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Backend &amp; Cloud</div>
+          <div class="cert-count">5 certificates</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-title">Mobile Development</div>
+          <div class="cert-count">4 certificates</div>
+          <div class="cert-issuer">Dicoding Academy</div>
+        </div>
+        <div class="cert-card" style="grid-column: 1 / -1;">
+          <div class="cert-title">Big Data &amp; Data Analytics Training (BDT)</div>
+          <div class="cert-count">1 professional certificate</div>
+          <div class="cert-issuer">BDT Program</div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 18px; margin-bottom: 10px;">
+        <span class="section-tag">// contact</span>
+        <div class="section-title" style="font-size: 18px;">Let's Connect</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-row"><span class="contact-label">$ email</span><span class="contact-value">[EMAIL_ANDA]@email.com</span></div>
+        <div class="contact-row"><span class="contact-label">$ phone</span><span class="contact-value">[+62 8xx-xxxx-xxxx]</span></div>
+        <div class="contact-row"><span class="contact-label">$ location</span><span class="contact-value">[Kota], Indonesia</span></div>
+        <div class="contact-row"><span class="contact-label">$ github</span><span class="contact-value"><a href="https://github.com/febririzki95">github.com/febririzki95</a></span></div>
+        <div class="contact-row"><span class="contact-label">$ github</span><span class="contact-value"><a href="https://github.com/hyperchainpro">github.com/hyperchainpro</a></span></div>
+        <div class="contact-row"><span class="contact-label">$ linkedin</span><span class="contact-value"><a href="#">[LINKEDIN_URL]</a></span></div>
+      </div>
+
+      <div class="ending-footer">
+        // Thank you for reviewing my portfolio.<br>// Let's create something impactful together.
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
