@@ -145,7 +145,7 @@ story.extend(section_header('WORK EXPERIENCE'))
 
 # Entry 1: Laboratorium Terpadu
 story.append(Paragraph('<b>Laboratory Technician &amp; UI/UX Web Designer + AI Stack Web Engineer</b>', job_title_style))
-story.append(Paragraph('Laboratorium Terpadu (Integrated Laboratory) &nbsp;|&nbsp; 2020 - Present &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('Integrated Laboratory, Universitas Sumatera Utara (USU) &nbsp;|&nbsp; 2020 - Present &nbsp;|&nbsp; Medan, North Sumatra, Indonesia', job_meta_style))
 story.append(Paragraph('•  Manage daily laboratory operations: sample testing, instrument calibration, and test result documentation according to SOP &amp; ISO standards.', bullet_style))
 story.append(Paragraph('•  Design and develop a web-based Laboratory Information Management System (LIMS) to digitize testing workflows, reporting, and sample management.', bullet_style))
 story.append(Paragraph('•  Design LIMS dashboard UI/UX with Figma, then implement using Next.js, React, TypeScript, and Tailwind CSS for the frontend.', bullet_style))

@@ -148,7 +148,7 @@ story.extend(section_header('PENGALAMAN KERJA'))
 
 # Entry 1: Laboratorium Terpadu
 story.append(Paragraph('<b>Laboran &amp; UI/UX Web Designer + AI Stack Web Engineer</b>', job_title_style))
-story.append(Paragraph('Laboratorium Terpadu &nbsp;|&nbsp; 2020 - Sekarang &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('Laboratorium Terpadu Universitas Sumatera Utara &nbsp;|&nbsp; 2020 - Sekarang &nbsp;|&nbsp; Medan, Sumatera Utara, Indonesia', job_meta_style))
 story.append(Paragraph('•  Mengelola operasional harian laboratorium terpadu: pengujian sampel, kalibrasi instrumen, dan dokumentasi hasil pengujian sesuai standar SOP &amp; ISO.', bullet_style))
 story.append(Paragraph('•  Mendesain dan mengembangkan sistem informasi laboratorium berbasis web (LIMS) untuk digitalisasi workflow pengujian, pelaporan, dan manajemen sampel.', bullet_style))
 story.append(Paragraph('•  Merancang UI/UX dashboard laboratorium dengan Figma, kemudian implementasi menggunakan Next.js, React, TypeScript, dan Tailwind CSS untuk frontend.', bullet_style))
