@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LinkedIn Carousel - About Me</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@page { size: 1080px 1080px; margin: 0; }
+:root {
+  --c-bg: #0d1117; --c-bg-2: #161b22; --c-bg-3: #21262d;
+  --c-border: #30363d; --c-text: #c9d1d9; --c-text-2: #8b949e; --c-text-3: #6e7681;
+  --c-accent: #58a6ff; --c-green: #238636; --c-green-text: #7ee787;
+  --c-yellow: #d29922; --c-orange: #db6d28; --c-purple: #8957e5; --c-pink: #db61a2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; width: 1080px; background: var(--c-bg); color: var(--c-text); font-family: 'Inter', sans-serif; }
+.poster {
+  width: 1080px; height: 1080px; box-sizing: border-box;
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  padding: 80px 90px;
+  position: relative; page-break-after: always; break-after: page;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.poster:last-child { page-break-after: auto; break-after: auto; }
+.deco-circle { position: absolute; border-radius: 50%; filter: blur(70px); z-index: 0; }
+.deco-1 { top: -200px; right: -200px; width: 600px; height: 600px; background: rgba(137, 87, 229, 0.18); }
+.deco-2 { bottom: -150px; left: -150px; width: 500px; height: 500px; background: rgba(88, 166, 255, 0.15); }
+.deco-3 { top: 30%; right: -200px; width: 400px; height: 400px; background: rgba(210, 153, 34, 0.12); }
+.content { position: relative; z-index: 2; }
+
+/* Cover */
+.cover { justify-content: center; }
+.cover-tag {
+  display: inline-block; padding: 10px 22px;
+  background: rgba(137, 87, 229, 0.15); border: 1px solid var(--c-purple);
+  border-radius: 30px; color: var(--c-purple); font-family: 'JetBrains Mono', monospace;
+  font-size: 22px; font-weight: 600; letter-spacing: 2px; margin-bottom: 50px;
+}
+.cover-title {
+  font-size: 110px; font-weight: 900; line-height: 1.0; letter-spacing: -3px;
+  color: #ffffff; margin-bottom: 35px;
+}
+.cover-title .accent { color: var(--c-purple); }
+.cover-subtitle {
+  font-size: 32px; color: var(--c-text-2); line-height: 1.5;
+  margin-bottom: 50px; max-width: 850px;
+}
+.cover-meta {
+  position: absolute; bottom: 80px; left: 90px; right: 90px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--c-text-3);
+}
+
+/* Content slides */
+.slide-num {
+  position: absolute; top: 80px; right: 90px;
+  font-family: 'JetBrains Mono', monospace; font-size: 26px;
+  color: var(--c-text-3); font-weight: 600;
+}
+.slide-num .current { color: var(--c-purple); }
+.slide-tag {
+  display: inline-block; padding: 8px 18px;
+  background: rgba(137, 87, 229, 0.12); border: 1px solid rgba(137, 87, 229, 0.3);
+  border-radius: 16px; color: var(--c-purple);
+  font-family: 'JetBrains Mono', monospace; font-size: 20px;
+  font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 25px;
+}
+.slide-title {
+  font-size: 64px; font-weight: 900; color: #ffffff;
+  line-height: 1.1; letter-spacing: -1px; margin-bottom: 30px;
+}
+.slide-title .accent { color: var(--c-purple); }
+.slide-divider {
+  width: 80px; height: 5px; background: var(--c-purple);
+  border-radius: 3px; margin-bottom: 40px;
+}
+.body-text {
+  font-size: 26px; color: var(--c-text-2); line-height: 1.65; margin-bottom: 20px;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  margin-top: 30px;
+}
+.stat-card {
+  background: var(--c-bg-2); border: 1px solid var(--c-border);
+  border-radius: 16px; padding: 32px;
+}
+.stat-number {
+  font-family: 'JetBrains Mono', monospace; font-size: 64px;
+  font-weight: 900; color: var(--c-purple); line-height: 1; margin-bottom: 10px;
+}
+.stat-label {
+  font-size: 20px; color: var(--c-text-2); font-weight: 500;
+}
+
+/* Quote slide */
+.quote-mark {
+  font-size: 200px; color: var(--c-purple); line-height: 0.6;
+  font-family: Georgia, serif; margin-bottom: 20px;
+}
+.quote-text {
+  font-size: 42px; color: #ffffff; font-weight: 500;
+  line-height: 1.4; margin-bottom: 40px; font-style: italic;
+}
+.quote-author {
+  font-size: 22px; color: var(--c-text-2); font-family: 'JetBrains Mono', monospace;
+}
+
+/* Skills */
+.skills-section { margin-top: 30px; }
+.skill-group {
+  margin-bottom: 32px;
+}
+.skill-group-title {
+  font-size: 24px; font-weight: 700; color: var(--c-accent);
+  font-family: 'JetBrains Mono', monospace; margin-bottom: 14px;
+}
+.skill-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.skill-pill {
+  padding: 10px 18px; background: var(--c-bg-2); border: 1px solid var(--c-border);
+  border-radius: 24px; font-size: 19px; color: var(--c-text); font-weight: 500;
+}
+
+/* Education */
+.edu-card {
+  background: var(--c-bg-2); border: 1px solid var(--c-border);
+  border-left: 5px solid var(--c-purple);
+  border-radius: 12px; padding: 28px 32px; margin-bottom: 24px;
+}
+.edu-degree { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+.edu-school { font-size: 22px; color: var(--c-accent); margin-bottom: 6px; font-weight: 500; }
+.edu-year { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--c-text-3); }
+.edu-detail { font-size: 19px; color: var(--c-text-2); margin-top: 10px; line-height: 1.5; }
+
+/* CTA */
+.cta-slide { justify-content: center; align-items: center; text-align: center; }
+.cta-emoji { font-size: 120px; margin-bottom: 30px; }
+.cta-title {
+  font-size: 80px; font-weight: 900; color: #ffffff;
+  line-height: 1.1; margin-bottom: 35px; letter-spacing: -2px;
+}
+.cta-title .accent { color: var(--c-purple); }
+.cta-desc {
+  font-size: 26px; color: var(--c-text-2); line-height: 1.5;
+  max-width: 800px; margin: 0 auto 50px;
+}
+.cta-box {
+  background: var(--c-bg-2); border: 1px solid var(--c-border);
+  border-radius: 16px; padding: 36px; max-width: 700px; margin: 0 auto;
+}
+.cta-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 0;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.5); font-size: 22px;
+}
+.cta-row:last-child { border-bottom: none; }
+.cta-row .label {
+  width: 110px; color: var(--c-text-3); font-family: 'JetBrains Mono', monospace; font-size: 19px;
+}
+.cta-row .value { color: var(--c-text); }
+</style>
+</head>
+<body>
+
+<!-- ── Slide 1: Cover ── -->
+<div class="poster cover">
+  <div class="deco-circle deco-1"></div>
+  <div class="deco-circle deco-2"></div>
+  <div class="content">
+    <span class="cover-tag">// ABOUT ME · 2026</span>
+    <div class="cover-title">Hi, I'm<br><span class="accent">Febri Rizki</span></div>
+    <div class="cover-subtitle">
+      UI/UX Designer &amp; AI Engineer blending design intuition with production-grade AI systems. Biology background turned tech — a unique edge for AI in life sciences &amp; healthcare.
+    </div>
+  </div>
+  <div class="cover-meta">
+    <span>linkedin.com/in/febririzki95</span>
+    <span>Swipe →</span>
+  </div>
+</div>
+
+<!-- ── Slide 2: The Story ── -->
+<div class="poster">
+  <div class="deco-circle deco-3"></div>
+  <div class="slide-num"><span class="current">02</span> / 06</div>
+  <div class="content" style="margin-top: 60px;">
+    <span class="slide-tag">// My Journey</span>
+    <div class="slide-title">From <span class="accent">Biology</span><br>to <span class="accent">AI Engineering</span></div>
+    <div class="slide-divider"></div>
+    <div class="body-text">
+      I started with a B.Sc. in Biology from Universitas Syiah Kuala (2018), then completed my M.Sc. at Universitas Sumatera Utara (2024).
+    </div>
+    <div class="body-text">
+      But during my Master's, I discovered something fascinating: <strong style="color: var(--c-text);">my biology background was a strategic advantage</strong> for building AI — understanding complex systems, scientific data analysis, and analytical thinking translated directly into computational biology, bioinformatics, and AI model development.
+    </div>
+    <div class="body-text">
+      Now I build end-to-end digital products combining UI/UX design and production AI — from design systems and component libraries to MLOps pipelines and AI-powered mobile apps.
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 3: What I Do (Stats) ── -->
+<div class="poster">
+  <div class="deco-circle deco-2"></div>
+  <div class="slide-num"><span class="current">03</span> / 06</div>
+  <div class="content" style="margin-top: 60px;">
+    <span class="slide-tag">// What I Do</span>
+    <div class="slide-title">Building <span class="accent">11+ Projects</span><br>End-to-End</div>
+    <div class="slide-divider"></div>
+    <div class="body-text">
+      Real products shipped across AI platforms, mobile ML apps, MLOps pipelines, and design systems. Not just tutorials — production-ready code with live deployments.
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">11+</div>
+        <div class="stat-label">Projects built &amp; shipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10</div>
+        <div class="stat-label">AI providers integrated (TRADIX)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">18</div>
+        <div class="stat-label">Dicoding Academy certificates</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Top 20</div>
+        <div class="stat-label">PIDI Digdaya BI Hackathon 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 4: Tech Arsenal ── -->
+<div class="poster">
+  <div class="deco-circle deco-1"></div>
+  <div class="slide-num"><span class="current">04</span> / 06</div>
+  <div class="content" style="margin-top: 60px;">
+    <span class="slide-tag">// Tech Arsenal</span>
+    <div class="slide-title">Tools I Use<br>Daily</div>
+    <div class="slide-divider"></div>
+    <div class="skills-section">
+      <div class="skill-group">
+        <div class="skill-group-title">// UI/UX Design</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">Adobe XD</span>
+          <span class="skill-pill">Design System</span>
+          <span class="skill-pill">Prototyping</span>
+          <span class="skill-pill">User Research</span>
+          <span class="skill-pill">Journey Mapping</span>
+          <span class="skill-pill">WCAG 2.1</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">// AI Engineering</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Gemini API</span>
+          <span class="skill-pill">OpenAI API</span>
+          <span class="skill-pill">LangChain</span>
+          <span class="skill-pill">RAG</span>
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">PyTorch</span>
+          <span class="skill-pill">MLflow</span>
+          <span class="skill-pill">Hugging Face</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">// Full-Stack</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Next.js 16</span>
+          <span class="skill-pill">React 19</span>
+          <span class="skill-pill">TypeScript</span>
+          <span class="skill-pill">Prisma</span>
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">Supabase</span>
+          <span class="skill-pill">React Native</span>
+          <span class="skill-pill">Flutter</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 5: Education ── -->
+<div class="poster">
+  <div class="deco-circle deco-2"></div>
+  <div class="slide-num"><span class="current">05</span> / 06</div>
+  <div class="content" style="margin-top: 60px;">
+    <span class="slide-tag">// Education</span>
+    <div class="slide-title">Academic<br><span class="accent">Background</span></div>
+    <div class="slide-divider"></div>
+    <div class="body-text" style="margin-bottom: 30px;">
+      Biology background that became a competitive edge for AI in life sciences &amp; healthcare domains.
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">M.Sc. in Biology</div>
+      <div class="edu-school">Universitas Sumatera Utara (USU)</div>
+      <div class="edu-year">2022 — 2024 · Medan, Indonesia</div>
+      <div class="edu-detail">Deep understanding of complex systems, scientific data analysis, and analytical thinking — directly applicable to computational biology, bioinformatics, and AI model development in life sciences.</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">B.Sc. in Biology</div>
+      <div class="edu-school">Universitas Syiah Kuala (Unsyiah)</div>
+      <div class="edu-year">2014 — 2018 · Banda Aceh, Indonesia</div>
+      <div class="edu-detail">Strong foundation in scientific method, statistics, and data processing that underpins my transition to data science and AI engineering.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 6: CTA ── -->
+<div class="poster cta-slide">
+  <div class="deco-circle deco-1"></div>
+  <div class="deco-circle deco-2"></div>
+  <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;">
+    <div class="cta-emoji">🤝</div>
+    <div class="cta-title">Let's <span class="accent">Connect</span></div>
+    <div class="cta-desc">
+      Open to collaborations, freelance projects, and full-time roles in UI/UX Design &amp; AI Engineering. Let's build something impactful together.
+    </div>
+    <div class="cta-box">
+      <div class="cta-row"><span class="label">$ github</span><span class="value">github.com/febririzki95</span></div>
+      <div class="cta-row"><span class="label">$ linkedin</span><span class="value">linkedin.com/in/febririzki95</span></div>
+      <div class="cta-row"><span class="label">$ email</span><span class="value">febririzki95@gmail.com</span></div>
+      <div class="cta-row"><span class="label">$ location</span><span class="value">Langsa, Aceh, Indonesia</span></div>
+    </div>
+    <div style="margin-top: 40px; font-family: 'JetBrains Mono', monospace; font-size: 20px; color: var(--c-text-3);">↑ Follow for more UI/UX &amp; AI content</div>
+  </div>
+</div>
+
+</body>
+</html>

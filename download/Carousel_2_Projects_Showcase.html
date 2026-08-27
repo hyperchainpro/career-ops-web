@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LinkedIn Carousel - 10+ Projects Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@page { size: 1080px 1080px; margin: 0; }
+:root {
+  --c-bg: #0d1117;
+  --c-bg-2: #161b22;
+  --c-bg-3: #21262d;
+  --c-border: #30363d;
+  --c-text: #c9d1d9;
+  --c-text-2: #8b949e;
+  --c-text-3: #6e7681;
+  --c-accent: #58a6ff;
+  --c-green: #238636;
+  --c-green-text: #7ee787;
+  --c-yellow: #d29922;
+  --c-orange: #db6d28;
+  --c-purple: #8957e5;
+  --c-pink: #db61a2;
+  --c-red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  margin: 0; padding: 0; width: 1080px;
+  background: var(--c-bg); color: var(--c-text);
+  font-family: 'Inter', sans-serif;
+}
+.poster {
+  width: 1080px; height: 1080px; box-sizing: border-box;
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  padding: 80px 90px;
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.poster:last-child { page-break-after: auto; break-after: auto; }
+
+/* ── Cover slide ── */
+.cover {
+  justify-content: center;
+  align-items: flex-start;
+}
+.cover-tag {
+  display: inline-block;
+  padding: 10px 22px;
+  background: rgba(35, 134, 54, 0.15);
+  border: 1px solid var(--c-green);
+  border-radius: 30px;
+  color: var(--c-green-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+}
+.cover-title {
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+.cover-title .accent { color: var(--c-green-text); }
+.cover-subtitle {
+  font-size: 32px;
+  color: var(--c-accent);
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.cover-desc {
+  font-size: 24px;
+  color: var(--c-text-2);
+  line-height: 1.6;
+  max-width: 800px;
+  margin-bottom: 50px;
+}
+.cover-meta {
+  position: absolute;
+  bottom: 80px;
+  left: 90px;
+  right: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--c-text-3);
+}
+.cover-meta .arrow { color: var(--c-green-text); font-size: 32px; animation: pulse 2s infinite; }
+
+/* ── Section header style for content slides ── */
+.slide-num {
+  position: absolute;
+  top: 80px;
+  right: 90px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  color: var(--c-text-3);
+  font-weight: 600;
+}
+.slide-num .current { color: var(--c-green-text); }
+.slide-tag {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(88, 166, 255, 0.12);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  border-radius: 16px;
+  color: var(--c-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+.slide-title {
+  font-size: 64px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+}
+.slide-divider {
+  width: 80px;
+  height: 5px;
+  background: var(--c-green);
+  border-radius: 3px;
+  margin-bottom: 40px;
+}
+
+/* ── Project card slide ── */
+.project-slide { padding: 70px 80px; }
+.project-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 220px;
+  font-weight: 900;
+  color: var(--c-bg-3);
+  line-height: 1;
+  position: absolute;
+  top: 60px;
+  right: 80px;
+  z-index: 1;
+}
+.project-content { position: relative; z-index: 2; margin-top: 200px; }
+.project-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(210, 153, 34, 0.15);
+  border: 1px solid var(--c-yellow);
+  border-radius: 14px;
+  color: var(--c-yellow);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.project-tag.normal {
+  background: rgba(88, 166, 255, 0.1);
+  border-color: rgba(88, 166, 255, 0.4);
+  color: var(--c-accent);
+}
+.project-name {
+  font-size: 52px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+}
+.project-tagline {
+  font-size: 26px;
+  color: var(--c-accent);
+  font-weight: 600;
+  margin-bottom: 25px;
+  line-height: 1.3;
+}
+.project-desc {
+  font-size: 22px;
+  color: var(--c-text-2);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  color: var(--c-text);
+  font-weight: 500;
+}
+.tech-pill::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pill-color, var(--c-text-3));
+}
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: rgba(35, 134, 54, 0.1);
+  border: 1px solid rgba(35, 134, 54, 0.4);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 19px;
+  color: var(--c-green-text);
+  font-weight: 500;
+}
+
+/* ── CTA slide ── */
+.cta-slide {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.cta-emoji { font-size: 120px; margin-bottom: 30px; }
+.cta-title {
+  font-size: 80px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 35px;
+  letter-spacing: -2px;
+}
+.cta-title .accent { color: var(--c-green-text); }
+.cta-desc {
+  font-size: 28px;
+  color: var(--c-text-2);
+  line-height: 1.5;
+  max-width: 800px;
+  margin: 0 auto 50px;
+}
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 30px;
+}
+.cta-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  background: var(--c-bg-2);
+  border: 1px solid var(--c-border);
+  border-radius: 50px;
+  font-size: 22px;
+  color: var(--c-text);
+  font-weight: 500;
+}
+.cta-action.highlight {
+  background: var(--c-green);
+  border-color: var(--c-green);
+  color: white;
+}
+.cta-action .icon { font-size: 28px; }
+
+/* Decorative */
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+}
+.deco-1 { top: -200px; right: -200px; width: 600px; height: 600px; background: rgba(35, 134, 54, 0.18); }
+.deco-2 { bottom: -150px; left: -150px; width: 500px; height: 500px; background: rgba(88, 166, 255, 0.15); }
+.cover-content { position: relative; z-index: 2; }
+</style>
+</head>
+<body>
+
+<!-- ── Slide 1: Cover ── -->
+<div class="poster cover">
+  <div class="deco-circle deco-1"></div>
+  <div class="deco-circle deco-2"></div>
+  <div class="cover-content" style="position: relative; z-index: 2;">
+    <span class="cover-tag">// PORTFOLIO · 2026</span>
+    <div class="cover-title">10+ Projects<br>That Blend <span class="accent">UI/UX</span> &amp;<br><span class="accent">AI Engineering</span></div>
+    <div class="cover-subtitle">Febri Rizki · UI/UX Designer &amp; AI Engineer</div>
+    <div class="cover-desc">
+      A showcase of products I've built across AI-powered design platforms, MLOps pipelines, AI tutors, mobile ML apps, and intelligent automation tools. All repos linked for verification.
+    </div>
+  </div>
+  <div class="cover-meta">
+    <span>github.com/febririzki95 &nbsp;·&nbsp; github.com/hyperchainpro</span>
+    <span>Swipe to explore →</span>
+  </div>
+</div>
+
+<!-- ── Slide 2: TRADIX (Featured #1) ── -->
+<div class="poster project-slide">
+  <div class="project-number">01</div>
+  <div class="project-content">
+    <span class="project-tag">★ FEATURED · Hackathon</span>
+    <div class="project-name">TRADIX</div>
+    <div class="project-tagline">AI-Powered Stock Trading Platform</div>
+    <div class="project-desc">
+      Flagship project for the <strong>PIDI Digdaya Bank Indonesia Hackathon 2026</strong>. Combines 10 AI providers (Gemini, GPT-4, Claude, DeepSeek, Llama) for stock analysis, trading signals, and smart money detection. Live at tradix-app.pages.dev with $0/month operational cost.
+    </div>
+    <div class="project-tech">
+      <span class="tech-pill" style="--pill-color: #61dafb">React Native</span>
+      <span class="tech-pill" style="--pill-color: #1c69ff">Gemini API</span>
+      <span class="tech-pill" style="--pill-color: #ff6b6b">DeepSeek</span>
+      <span class="tech-pill" style="--pill-color: #3ecf8e">Supabase</span>
+      <span class="tech-pill" style="--pill-color: #8b5cf6">Puter.js</span>
+    </div>
+    <div class="project-link">→ github.com/hyperchainpro/TRADIX · Live: tradix-app.pages.dev</div>
+  </div>
+</div>
+
+<!-- ── Slide 3: HyperChain Pro ── -->
+<div class="poster project-slide">
+  <div class="project-number">02</div>
+  <div class="project-content">
+    <span class="project-tag normal">Design Platform</span>
+    <div class="project-name">HyperChain Pro</div>
+    <div class="project-tagline">AI-Powered Design Platform with BranchBoard</div>
+    <div class="project-desc">
+      A collaborative design platform that integrates generative AI into the UI/UX workflow. BranchBoard allows designers to create parallel design variations with AI-assisted creative exploration — like Git branching, but for visual assets.
+    </div>
+    <div class="project-tech">
+      <span class="tech-pill" style="--pill-color: #ffffff">Next.js 16</span>
+      <span class="tech-pill" style="--pill-color: #3178c6">TypeScript</span>
+      <span class="tech-pill" style="--pill-color: #5a67d8">Prisma</span>
+      <span class="tech-pill" style="--pill-color: #1c69ff">Neon DB</span>
+      <span class="tech-pill" style="--pill-color: #db61a2">dnd-kit</span>
+    </div>
+    <div class="project-link">→ github.com/hyperchainpro/hyperchainpro</div>
+  </div>
+</div>
+
+<!-- ── Slide 4: PathMentor AI ── -->
+<div class="poster project-slide">
+  <div class="project-number">03</div>
+  <div class="project-content">
+    <span class="project-tag normal">EdTech · AI</span>
+    <div class="project-name">PathMentor AI</div>
+    <div class="project-tagline">Adaptive AI Tutor for High-School Students</div>
+    <div class="project-desc">
+      Built for the <strong>Build with Gemini XPRIZE 2026</strong> hackathon. A personalized AI tutor using a Socratic approach with auto-generated quizzes, smart flashcards (SM-2 spaced repetition), essay review, and step-by-step math solver. Powered by Gemini 2.0 Flash.
+    </div>
+    <div class="project-tech">
+      <span class="tech-pill" style="--pill-color: #ffffff">Next.js 16</span>
+      <span class="tech-pill" style="--pill-color: #5a67d8">Prisma</span>
+      <span class="tech-pill" style="--pill-color: #1c69ff">Gemini 2.0 Flash</span>
+      <span class="tech-pill" style="--pill-color: #f97316">shadcn/ui</span>
+      <span class="tech-pill" style="--pill-color: #ef4444">Framer Motion</span>
+    </div>
+    <div class="project-link">→ github.com/febririzki95/pathmentor-ai</div>
+  </div>
+</div>
+
+<!-- ── Slide 5: DapurMind AI + CR AutoPilot ── -->
+<div class="poster">
+  <div class="slide-num"><span class="current">05</span> / 10</div>
+  <div style="padding-top: 60px;">
+    <span class="slide-tag">// AI · Automation</span>
+    <div class="slide-title" style="font-size: 52px; margin-bottom: 50px;">AI Products<br>Shipped to Production</div>
+    <div class="slide-divider"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr; gap: 24px; flex: 1;">
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent);">04 · DapurMind AI</div>
+      </div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">AI-Powered Cooking Assistant</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">Generates recipes based on available ingredients, real-time nutrition analysis via Gemini AI, edge deployment via Cloudflare Pages.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/hyperchainpro/dapurmindai</div>
+    </div>
+
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent);">05 · CR AutoPilot</div>
+      </div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">Automated ContentRewards Pipeline</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">End-to-end automation: scraper, video editor, and social poster to 34 platforms simultaneously via Playwright MCP.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/hyperchainpro/cr-autopilot</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 6: Food Recognizer ── -->
+<div class="poster project-slide">
+  <div class="project-number">06</div>
+  <div class="project-content">
+    <span class="project-tag normal">Mobile ML</span>
+    <div class="project-name">Food Recognizer</div>
+    <div class="project-tagline">Flutter ML App · 2,023 Food Categories</div>
+    <div class="project-desc">
+      A Flutter app using TensorFlow Lite to identify food types from photos. Recognizes 2,023 categories with inference running on a background Isolate for optimal UI responsiveness. Integrated with MealDB API &amp; Gemini AI for nutrition info.
+    </div>
+    <div class="project-tech">
+      <span class="tech-pill" style="--pill-color: #02569B">Flutter</span>
+      <span class="tech-pill" style="--pill-color: #00B4AB">Dart</span>
+      <span class="tech-pill" style="--pill-color: #FF6F00">TensorFlow Lite</span>
+      <span class="tech-pill" style="--pill-color: #1c69ff">Gemini AI</span>
+    </div>
+    <div class="project-link">→ github.com/febririzki95/food_recognizer_ci_check</div>
+  </div>
+</div>
+
+<!-- ── Slide 7: Workflow-CI MLOps ── -->
+<div class="poster project-slide">
+  <div class="project-number">07</div>
+  <div class="project-content">
+    <span class="project-tag normal">MLOps · CI/CD</span>
+    <div class="project-name">Workflow-CI</div>
+    <div class="project-tagline">Automated ML Model Retraining Pipeline</div>
+    <div class="project-desc">
+      An MLOps pipeline that automates ML model retraining using MLflow Project + GitHub Actions CI. Uses Breast Cancer Wisconsin dataset as POC, with Docker Hub deployment for environment reproducibility. Weekly cron-triggered retraining.
+    </div>
+    <div class="project-tech">
+      <span class="tech-pill" style="--pill-color: #3572A5">Python</span>
+      <span class="tech-pill" style="--pill-color: #0194E2">MLflow</span>
+      <span class="tech-pill" style="--pill-color: #2088FF">GitHub Actions</span>
+      <span class="tech-pill" style="--pill-color: #2496ED">Docker</span>
+    </div>
+    <div class="project-link">→ github.com/febririzki95/Workflow-CI</div>
+  </div>
+</div>
+
+<!-- ── Slide 8: NeuroPilot + Eksperimen SML ── -->
+<div class="poster">
+  <div class="slide-num"><span class="current">08</span> / 10</div>
+  <div style="padding-top: 60px;">
+    <span class="slide-tag">// Production · Research</span>
+    <div class="slide-title" style="font-size: 52px; margin-bottom: 50px;">Production-Grade<br>Architecture &amp; Research</div>
+    <div class="slide-divider"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr; gap: 24px; flex: 1;">
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent); margin-bottom: 12px;">08 · NeuroPilot</div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">AI Platform with Caddy Server</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">Production-grade architecture: Caddy reverse proxy, dual database (PostgreSQL + SQLite), MDX editor, modular mini-services.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/febririzki95/NeuroPilot</div>
+    </div>
+
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent); margin-bottom: 12px;">09 · Eksperimen SML</div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">ML Preprocessing Automation</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">EDA + automated preprocessing pipeline for Breast Cancer Wisconsin dataset. Reproducible scripts, GitHub Actions validation.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/febririzki95/Eksperimen_SML_Febri</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 9: Hyperchain Landing + HYP Convert ── -->
+<div class="poster">
+  <div class="slide-num"><span class="current">09</span> / 10</div>
+  <div style="padding-top: 60px;">
+    <span class="slide-tag">// UI/UX · Mobile</span>
+    <div class="slide-title" style="font-size: 52px; margin-bottom: 50px;">Creative UI/UX &amp;<br>Cross-Platform Apps</div>
+    <div class="slide-divider"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr; gap: 24px; flex: 1;">
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent); margin-bottom: 12px;">10 · Hyperchain Landing</div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">Integrated Digital Ecosystem</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">3D animations with Three.js, GSAP scroll storytelling, Framer Motion micro-interactions, edge deployment via Cloudflare Pages.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/hyperchainpro/hyperchain-landing</div>
+    </div>
+
+    <div style="background: var(--c-bg-2); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--c-accent); margin-bottom: 12px;">11 · HYP Convert</div>
+      <div style="font-size: 22px; color: var(--c-text); margin-bottom: 10px; font-weight: 600;">Multi-platform Document Converter</div>
+      <div style="font-size: 19px; color: var(--c-text-2); line-height: 1.5; margin-bottom: 14px;">Expo + React Native app converting PDF/DOCX/XLSX/images. Supabase backend, biometric auth, document scanner.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--c-green-text);">→ github.com/hyperchainpro/hyp-convert</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide 10: CTA ── -->
+<div class="poster cta-slide">
+  <div class="deco-circle deco-1" style="top: -200px; right: -200px; width: 500px; height: 500px;"></div>
+  <div class="deco-circle deco-2" style="bottom: -150px; left: -150px; width: 400px; height: 400px;"></div>
+  <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;">
+    <div class="cta-emoji">🚀</div>
+    <div class="cta-title">Let's Build<br><span class="accent">Something Impactful</span></div>
+    <div class="cta-desc">
+      All 11 projects are open for review on GitHub. If you're hiring, collaborating, or just want to talk shop — let's connect.
+    </div>
+    <div class="cta-actions">
+      <div class="cta-action highlight"><span class="icon">🔗</span> github.com/febririzki95</div>
+      <div class="cta-action"><span class="icon">💼</span> linkedin.com/in/febririzki95</div>
+      <div class="cta-action"><span class="icon">📧</span> febririzki95@gmail.com</div>
+    </div>
+    <div style="margin-top: 50px; font-family: 'JetBrains Mono', monospace; font-size: 20px; color: var(--c-text-3);">↑ Swipe up · Follow for more AI &amp; UI/UX content</div>
+  </div>
+</div>
+
+</body>
+</html>
