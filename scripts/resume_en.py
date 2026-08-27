@@ -143,7 +143,7 @@ story.append(Paragraph(
 # ── Work Experience ──
 story.extend(section_header('WORK EXPERIENCE'))
 story.append(Paragraph('<b>UI/UX Designer &amp; AI Engineer (Hybrid Role)</b>', job_title_style))
-story.append(Paragraph('[Current Company Name] &nbsp;|&nbsp; [Start Year] - Present &nbsp;|&nbsp; [City], Indonesia', job_meta_style))
+story.append(Paragraph('Hyperchain Project &nbsp;|&nbsp; 2026 - Present &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
 story.append(Paragraph('•  Led end-to-end design and AI integration for digital platforms, combining UX research, prototyping, and machine learning model deployment.', bullet_style))
 story.append(Paragraph('•  Built a component-based design system that improved visual consistency by 30% and accelerated frontend development cycles.', bullet_style))
 story.append(Paragraph('•  Implemented Google Gemini API integration for AI tutor features and smart assistants, delivering personalized experiences for 1,000+ users.', bullet_style))
