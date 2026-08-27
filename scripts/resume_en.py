@@ -142,14 +142,29 @@ story.append(Paragraph(
 
 # ── Work Experience ──
 story.extend(section_header('WORK EXPERIENCE'))
-story.append(Paragraph('<b>UI/UX Designer &amp; AI Engineer (Hybrid Role)</b>', job_title_style))
-story.append(Paragraph('Hyperchain Project &nbsp;|&nbsp; 2026 - Present &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
-story.append(Paragraph('•  Led end-to-end design and AI integration for digital platforms, combining UX research, prototyping, and machine learning model deployment.', bullet_style))
-story.append(Paragraph('•  Built a component-based design system that improved visual consistency by 30% and accelerated frontend development cycles.', bullet_style))
-story.append(Paragraph('•  Implemented Google Gemini API integration for AI tutor features and smart assistants, delivering personalized experiences for 1,000+ users.', bullet_style))
-story.append(Paragraph('•  Conducted iterative usability testing that reduced user friction by 25% and increased task completion rate by 40%.', bullet_style))
-story.append(Paragraph('•  Collaborated cross-functionally (frontend, backend, ML engineers) to launch 6 production-ready AI products within a 12-month period.', bullet_style))
-story.append(Paragraph('•  Built an MLOps pipeline (MLflow + GitHub Actions) for automated model retraining, reducing model drift by 50%.', bullet_style))
+
+# Entry 1: Laboratorium Terpadu
+story.append(Paragraph('<b>Laboratory Technician &amp; UI/UX Web Designer + AI Stack Web Engineer</b>', job_title_style))
+story.append(Paragraph('Laboratorium Terpadu (Integrated Laboratory) &nbsp;|&nbsp; 2020 - Present &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('•  Manage daily laboratory operations: sample testing, instrument calibration, and test result documentation according to SOP &amp; ISO standards.', bullet_style))
+story.append(Paragraph('•  Design and develop a web-based Laboratory Information Management System (LIMS) to digitize testing workflows, reporting, and sample management.', bullet_style))
+story.append(Paragraph('•  Design LIMS dashboard UI/UX with Figma, then implement using Next.js, React, TypeScript, and Tailwind CSS for the frontend.', bullet_style))
+story.append(Paragraph('•  Integrate AI stack for test result prediction and automated sample classification using Google Gemini API &amp; TensorFlow.', bullet_style))
+story.append(Paragraph('•  Build REST API with Node.js, Express, and Prisma ORM to handle communication between frontend, PostgreSQL database, and AI modules.', bullet_style))
+story.append(Paragraph('•  Implement authentication system (JWT + bcrypt) and role-based access control for admin, laboratory technicians, and researchers.', bullet_style))
+story.append(Paragraph('•  Deploy applications to Vercel &amp; Cloudflare Pages with CI/CD pipeline via GitHub Actions.', bullet_style))
+story.append(Paragraph('•  Train 5+ new laboratory staff on the information system and digital procedures.', bullet_style))
+story.append(Spacer(1, 4))
+
+# Entry 2: SMPN 3 Langsa (Internship)
+story.append(Paragraph('<b>School Website Administrator (Internship)</b>', job_title_style))
+story.append(Paragraph('SMPN 3 Langsa (Junior High School) &nbsp;|&nbsp; 2019 - 2020 &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('•  Manage and develop the official school website using WordPress CMS &amp; HTML/CSS/JavaScript.', bullet_style))
+story.append(Paragraph('•  Update website content on a regular basis: school announcements, event schedules, teacher profiles, and event documentation.', bullet_style))
+story.append(Paragraph('•  Redesign website layout to improve user experience &amp; mobile responsiveness (mobile-first design).', bullet_style))
+story.append(Paragraph('•  Create and manage school social media accounts (Instagram, YouTube) integrated with the website.', bullet_style))
+story.append(Paragraph('•  Perform routine maintenance: database backups, plugin updates, and website security monitoring.', bullet_style))
+story.append(Paragraph('•  Train 2 senior teachers to independently manage website content through documentation &amp; training sessions.', bullet_style))
 story.append(Spacer(1, 3))
 
 # ── Education ──

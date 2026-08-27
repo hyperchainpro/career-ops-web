@@ -145,14 +145,29 @@ story.append(Paragraph(
 
 # ── Pengalaman Kerja ──
 story.extend(section_header('PENGALAMAN KERJA'))
-story.append(Paragraph('<b>UI/UX Designer &amp; AI Engineer (Hybrid Role)</b>', job_title_style))
-story.append(Paragraph('Hyperchain Project &nbsp;|&nbsp; 2026 - Sekarang &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
-story.append(Paragraph('•  Memimpin desain end-to-end dan integrasi AI untuk platform digital, menggabungkan riset UX, prototyping, dan deployment model machine learning.', bullet_style))
-story.append(Paragraph('•  Merancang sistem desain berbasis komponen (design system) yang meningkatkan konsistensi visual sebesar 30% dan mempercepat waktu pengembangan frontend.', bullet_style))
-story.append(Paragraph('•  Mengimplementasikan integrasi Google Gemini API untuk fitur AI tutor dan asisten cerdas, menghasilkan pengalaman personalisasi untuk 1.000+ pengguna.', bullet_style))
-story.append(Paragraph('•  Melakukan usability testing iteratif yang mengurangi friction pengguna sebesar 25% dan meningkatkan task completion rate hingga 40%.', bullet_style))
-story.append(Paragraph('•  Berkoordinasi lintas tim (frontend, backend, ML engineer) untuk meluncurkan 6 produk AI dalam kurun waktu 12 bulan dengan kualitas production-ready.', bullet_style))
-story.append(Paragraph('•  Membangun pipeline MLOps (MLflow + GitHub Actions) untuk automated retraining model, menurunkan model drift hingga 50%.', bullet_style))
+
+# Entry 1: Laboratorium Terpadu
+story.append(Paragraph('<b>Laboran &amp; UI/UX Web Designer + AI Stack Web Engineer</b>', job_title_style))
+story.append(Paragraph('Laboratorium Terpadu &nbsp;|&nbsp; 2020 - Sekarang &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('•  Mengelola operasional harian laboratorium terpadu: pengujian sampel, kalibrasi instrumen, dan dokumentasi hasil pengujian sesuai standar SOP &amp; ISO.', bullet_style))
+story.append(Paragraph('•  Mendesain dan mengembangkan sistem informasi laboratorium berbasis web (LIMS) untuk digitalisasi workflow pengujian, pelaporan, dan manajemen sampel.', bullet_style))
+story.append(Paragraph('•  Merancang UI/UX dashboard laboratorium dengan Figma, kemudian implementasi menggunakan Next.js, React, TypeScript, dan Tailwind CSS untuk frontend.', bullet_style))
+story.append(Paragraph('•  Mengintegrasikan AI stack untuk fitur prediksi hasil pengujian dan klasifikasi sampel otomatis menggunakan Google Gemini API &amp; TensorFlow.', bullet_style))
+story.append(Paragraph('•  Membangun REST API dengan Node.js, Express, dan Prisma ORM untuk komunikasi antara frontend, database PostgreSQL, dan modul AI.', bullet_style))
+story.append(Paragraph('•  Mengimplementasikan sistem autentikasi (JWT + bcrypt) dan role-based access control untuk admin, laboran, dan peneliti.', bullet_style))
+story.append(Paragraph('•  Melakukan deployment aplikasi ke Vercel &amp; Cloudflare Pages dengan CI/CD pipeline via GitHub Actions.', bullet_style))
+story.append(Paragraph('•  Melatih 5+ staf laboratorium baru dalam penggunaan sistem informasi dan prosedur digital.', bullet_style))
+story.append(Spacer(1, 4))
+
+# Entry 2: SMPN 3 Langsa (Magang)
+story.append(Paragraph('<b>Admin Website Sekolah (Magang)</b>', job_title_style))
+story.append(Paragraph('SMPN 3 Langsa &nbsp;|&nbsp; 2019 - 2020 &nbsp;|&nbsp; Langsa, Aceh, Indonesia', job_meta_style))
+story.append(Paragraph('•  Mengelola dan mengembangkan website resmi sekolah menggunakan CMS WordPress &amp; HTML/CSS/JavaScript.', bullet_style))
+story.append(Paragraph('•  Memperbarui konten website secara berkala: pengumuman sekolah, agenda kegiatan, profil guru, dan dokumentasi event.', bullet_style))
+story.append(Paragraph('•  Mendesain ulang tampilan website untuk meningkatkan user experience &amp; responsivitas mobile (mobile-first design).', bullet_style))
+story.append(Paragraph('•  Membuat dan mengelola akun media sosial sekolah (Instagram, YouTube) terintegrasi dengan website.', bullet_style))
+story.append(Paragraph('•  Melakukan maintenance rutin: backup database, update plugin, dan monitoring keamanan website.', bullet_style))
+story.append(Paragraph('•  Melatih 2 guru senior dalam mengelola konten website secara mandiri melalui dokumentasi &amp; sesi training.', bullet_style))
 story.append(Spacer(1, 3))
 
 # ── Pendidikan ──
