@@ -170,7 +170,7 @@ story.append(Paragraph('Featured projects with public repository links for verif
 projects_en = [
     ('TRADIX - AI-Powered Stock Trading Platform (Hackathon PIDI Digdaya BI 2026 Project)',
      'https://github.com/hyperchainpro/TRADIX'),
-    ('HyperChain Pro - AI-Powered Design Platform with BranchBoard',
+    ('HyperChain Pro - AI-Powered Design Platform with LayerBoard',
      'https://github.com/hyperchainpro/hyperchainpro'),
     ('PathMentor AI - Adaptive AI Tutor for High-School Students',
      'https://github.com/febririzki95/pathmentor-ai'),
