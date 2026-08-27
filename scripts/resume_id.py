@@ -223,13 +223,10 @@ story.append(Paragraph('<b>Semifinalis — Hackathon PIDI Digdaya Bank Indonesia
 story.append(Paragraph('Bank Indonesia &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Nasional', job_meta_style))
 story.append(Paragraph('Bersama tim, mengembangkan solusi digital inovatif berbasis data dan AI untuk mendukung transformasi digital di ekosistem Bank Indonesia. Lolos seleksi tahap preliminary dan masuk 20 tim teratas nasional dari ratusan peserta.', body_style))
 
-story.append(Paragraph('<b>Participant — Build with Gemini XPRIZE 2026</b>', job_title_style))
-story.append(Paragraph('Google &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Global', job_meta_style))
-story.append(Paragraph('Mengembangkan PathMentor AI, adaptive tutor untuk siswa SMA berbasis Gemini 2.0 Flash dengan pendekatan Socratic learning.', body_style))
-
 # ── Bahasa ──
 story.extend(section_header('BAHASA'))
 story.append(Paragraph('<b>Bahasa Indonesia</b> — Penutur Asli', skill_style))
+story.append(Paragraph('<b>Bahasa Inggris</b> — Profesional', skill_style))
 
 # ── Build ──
 doc.build(story)
