@@ -152,6 +152,17 @@ story.append(Paragraph('•  Collaborated cross-functionally (frontend, backend,
 story.append(Paragraph('•  Built an MLOps pipeline (MLflow + GitHub Actions) for automated model retraining, reducing model drift by 50%.', bullet_style))
 story.append(Spacer(1, 3))
 
+# ── Education ──
+story.extend(section_header('EDUCATION'))
+story.append(Paragraph('<b>Master of Science (M.Si.) - Biology</b>', job_title_style))
+story.append(Paragraph('Universitas Sumatera Utara (USU), Medan &nbsp;|&nbsp; 2022 - 2024', job_meta_style))
+story.append(Paragraph('Academic background in biology provides strategic advantage for AI Engineering: deep understanding of complex systems, scientific data analysis, and analytical thinking patterns directly relevant for computational biology, bioinformatics, and AI model development in life sciences &amp; healthcare domains.', body_style))
+
+story.append(Paragraph('<b>Bachelor of Science (S.Si.) - Biology</b>', job_title_style))
+story.append(Paragraph('Universitas Syiah Kuala (Unsyiah), Banda Aceh &nbsp;|&nbsp; 2014 - 2018', job_meta_style))
+story.append(Paragraph('Strong foundation in scientific method, statistics, and data processing that underpins the career transition to data science and AI engineering.', body_style))
+story.append(Spacer(1, 3))
+
 # ── Project Portfolio ──
 story.extend(section_header('PROJECT PORTFOLIO'))
 story.append(Paragraph('Featured projects with public repository links for verification:', body_style))
@@ -161,7 +172,7 @@ projects_en = [
      'https://github.com/hyperchainpro/TRADIX'),
     ('HyperChain Pro - AI-Powered Design Platform with BranchBoard',
      'https://github.com/hyperchainpro/hyperchainpro'),
-    ('PathMentor AI - Adaptive AI Tutor for High-School Students (Gemini XPRIZE 2026)',
+    ('PathMentor AI - Adaptive AI Tutor for High-School Students',
      'https://github.com/febririzki95/pathmentor-ai'),
     ('DapurMind AI - AI-Powered Cooking Assistant',
      'https://github.com/hyperchainpro/dapurmindai'),
@@ -182,17 +193,6 @@ projects_en = [
 ]
 for name, url in projects_en:
     story.append(Paragraph(f'•  <b>{name}</b> &nbsp;|&nbsp; <font color="#2185b8">{url}</font>', bullet_style))
-story.append(Spacer(1, 3))
-
-# ── Education ──
-story.extend(section_header('EDUCATION'))
-story.append(Paragraph('<b>Master of Science (M.Si.) - Biology</b>', job_title_style))
-story.append(Paragraph('Universitas Sumatera Utara (USU), Medan &nbsp;|&nbsp; 2022 - 2024', job_meta_style))
-story.append(Paragraph('Academic background in biology provides strategic advantage for AI Engineering: deep understanding of complex systems, scientific data analysis, and analytical thinking patterns directly relevant for computational biology, bioinformatics, and AI model development in life sciences &amp; healthcare domains.', body_style))
-
-story.append(Paragraph('<b>Bachelor of Science (S.Si.) - Biology</b>', job_title_style))
-story.append(Paragraph('Universitas Syiah Kuala (Unsyiah), Banda Aceh &nbsp;|&nbsp; 2014 - 2018', job_meta_style))
-story.append(Paragraph('Strong foundation in scientific method, statistics, and data processing that underpins the career transition to data science and AI engineering.', body_style))
 story.append(Spacer(1, 3))
 
 # ── Skills ──
