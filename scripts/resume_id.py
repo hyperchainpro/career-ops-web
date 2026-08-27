@@ -198,11 +198,11 @@ story.append(Spacer(1, 3))
 
 # ── Keahlian ──
 story.extend(section_header('KEAHLIAN'))
-story.append(Paragraph('<b>UI/UX Design:</b>  Figma, Adobe XD, Design System, Wireframing, Prototyping, Usability Testing, User Research, Journey Mapping, Neumorphic Design', skill_style))
-story.append(Paragraph('<b>Frontend Development:</b>  React, Next.js 16, React Native (Expo), TypeScript, Tailwind CSS 4, shadcn/ui, Radix UI, Framer Motion, Zustand, Three.js, GSAP', skill_style))
-story.append(Paragraph('<b>AI/Machine Learning:</b>  Google Gemini API, TensorFlow Lite, MLflow, Model Deployment, Prompt Engineering, MLOps, scikit-learn, EDA, Data Preprocessing', skill_style))
-story.append(Paragraph('<b>Backend &amp; Database:</b>  Prisma ORM, PostgreSQL, Neon, Convex, Supabase, Node.js, REST API, Bcrypt Auth, SQLite', skill_style))
-story.append(Paragraph('<b>Cloud &amp; DevOps:</b>  Vercel, Cloudflare Pages, GitHub Actions, Docker, Caddy Server, CI/CD Pipeline, OpenNext', skill_style))
+story.append(Paragraph('<b>UI/UX Designer Tech Stack:</b>  Figma, Adobe XD, Sketch, Adobe Photoshop, Adobe Illustrator, Design System &amp; Tokens, Wireframing, Prototyping, Usability Testing, User Research, Journey Mapping, Persona Development, Information Architecture, A/B Testing, Neumorphic Design, Material Design, Mobile-First &amp; Responsive Design, Accessibility (WCAG 2.1), Figma Auto Layout, Figma Variants, Micro-interactions', skill_style))
+story.append(Paragraph('<b>AI Engineer Tech Stack:</b>  Google Gemini API (gemini-2.0-flash), OpenAI API, Prompt Engineering, RAG (Retrieval-Augmented Generation), LangChain, TensorFlow, TensorFlow Lite, PyTorch, scikit-learn, MLflow, Model Deployment &amp; Retraining, MLOps, Pandas, NumPy, Matplotlib, EDA, Feature Engineering, Computer Vision, Image Classification, Isolate Inference, Hugging Face', skill_style))
+story.append(Paragraph('<b>Frontend Development:</b>  React, Next.js 16, React Native (Expo), TypeScript, Tailwind CSS 4, shadcn/ui, Radix UI, Framer Motion, Zustand, Three.js, GSAP, MDX Editor', skill_style))
+story.append(Paragraph('<b>Backend &amp; Database:</b>  Prisma ORM, PostgreSQL, Neon, Convex, Supabase, Node.js, REST API, Bcrypt Auth, SQLite, Caddy Server', skill_style))
+story.append(Paragraph('<b>Cloud &amp; DevOps:</b>  Vercel, Cloudflare Pages, GitHub Actions, Docker, CI/CD Pipeline, OpenNext, Wrangler, EAS Build, Vercel Postgres', skill_style))
 story.append(Paragraph('<b>Bahasa Pemrograman:</b>  TypeScript, JavaScript, Python, Dart, PHP, SQL', skill_style))
 
 # ── Sertifikasi (Grouped + Link) ──
@@ -228,7 +228,6 @@ story.append(Paragraph('Mengembangkan PathMentor AI, adaptive tutor untuk siswa 
 # ── Bahasa ──
 story.extend(section_header('BAHASA'))
 story.append(Paragraph('<b>Bahasa Indonesia</b> — Penutur Asli', skill_style))
-story.append(Paragraph('<b>Bahasa Inggris</b> — Profesional (TOEFL/IELTS: [Skor Anda])', skill_style))
 
 # ── Build ──
 doc.build(story)
