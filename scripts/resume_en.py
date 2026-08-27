@@ -171,9 +171,9 @@ projects_en = [
     ('TRADIX - AI-Powered Stock Trading Platform (Hackathon PIDI Digdaya BI 2026 Project)',
      'https://github.com/hyperchainpro/TRADIX',
      'https://tradix-app.pages.dev'),
-    ('HyperChain Pro - AI-Powered Design Platform with LayerBoard',
-     'https://github.com/hyperchainpro/hyperchainpro',
-     'https://hyperchainpro.vercel.app'),
+    ('LayerBoard - AI-Powered Design Generation Platform',
+     'https://github.com/hyperchainpro/layerboard',
+     'https://layerboard.vercel.app'),
     ('PathMentor AI - Adaptive AI Tutor for High-School Students',
      'https://github.com/febririzki95/pathmentor-ai',
      'https://pathmentor-ai-one.vercel.app'),
@@ -232,7 +232,7 @@ story.append(Paragraph('Certificate verification link (Google Drive): <font colo
 story.extend(section_header('AWARDS'))
 story.append(Paragraph('<b>Semifinalist — PIDI Digdaya Bank Indonesia Hackathon 2026</b>', job_title_style))
 story.append(Paragraph('Bank Indonesia &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; National', job_meta_style))
-story.append(Paragraph('Collaborated with a team to develop an innovative data- and AI-driven digital solution supporting Bank Indonesia\'s digital transformation agenda. Passed the preliminary selection round and ranked among the top 20 teams nationally out of hundreds of participating teams.', body_style))
+story.append(Paragraph('Collaborated with a team to develop an innovative data- and AI-driven digital solution supporting Bank Indonesia\'s digital transformation agenda. Passed the preliminary selection round and ranked among the top 20 teams nationally out of thousands of participating teams.', body_style))
 
 # ── Languages ──
 story.extend(section_header('LANGUAGES'))
