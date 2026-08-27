@@ -169,30 +169,44 @@ story.append(Paragraph('Featured projects with public repository links for verif
 
 projects_en = [
     ('TRADIX - AI-Powered Stock Trading Platform (Hackathon PIDI Digdaya BI 2026 Project)',
-     'https://github.com/hyperchainpro/TRADIX'),
+     'https://github.com/hyperchainpro/TRADIX',
+     'https://tradix-app.pages.dev'),
     ('HyperChain Pro - AI-Powered Design Platform with LayerBoard',
-     'https://github.com/hyperchainpro/hyperchainpro'),
+     'https://github.com/hyperchainpro/hyperchainpro',
+     'https://hyperchainpro.vercel.app'),
     ('PathMentor AI - Adaptive AI Tutor for High-School Students',
-     'https://github.com/febririzki95/pathmentor-ai'),
+     'https://github.com/febririzki95/pathmentor-ai',
+     'https://pathmentor-ai-one.vercel.app'),
     ('DapurMind AI - AI-Powered Cooking Assistant',
-     'https://github.com/hyperchainpro/dapurmindai'),
+     'https://github.com/hyperchainpro/dapurmindai',
+     'https://dapurmindai.vercel.app'),
     ('CR AutoPilot - Automated ContentRewards Pipeline (34 Platforms)',
-     'https://github.com/hyperchainpro/cr-autopilot'),
+     'https://github.com/hyperchainpro/cr-autopilot',
+     'https://cr-autopilot.vercel.app'),
     ('Food Recognizer - Flutter ML App (2023 Food Categories)',
-     'https://github.com/febririzki95/food_recognizer_ci_check'),
+     'https://github.com/febririzki95/food_recognizer_ci_check',
+     None),
     ('Workflow-CI - Automated ML Model Retraining (MLOps)',
-     'https://github.com/febririzki95/Workflow-CI'),
+     'https://github.com/febririzki95/Workflow-CI',
+     None),
     ('NeuroPilot - AI Platform with Caddy Server & Neon DB',
-     'https://github.com/febririzki95/NeuroPilot'),
+     'https://github.com/febririzki95/NeuroPilot',
+     'https://neuro-pilot-psi.vercel.app'),
     ('Eksperimen SML - ML Preprocessing Automation (Breast Cancer Dataset)',
-     'https://github.com/febririzki95/Eksperimen_SML_Febri'),
+     'https://github.com/febririzki95/Eksperimen_SML_Febri',
+     None),
     ('Hyperchain Landing - Integrated Digital Ecosystem',
-     'https://github.com/hyperchainpro/hyperchain-landing'),
+     'https://github.com/hyperchainpro/hyperchain-landing',
+     'https://hyperchain-landing.pages.dev'),
     ('HYP Convert - Multi-platform Document Converter (Expo/React Native)',
-     'https://github.com/hyperchainpro/hyp-convert'),
+     'https://github.com/hyperchainpro/hyp-convert',
+     'https://hyp-convert.vercel.app'),
 ]
-for name, url in projects_en:
-    story.append(Paragraph(f'•  <b>{name}</b> &nbsp;|&nbsp; <font color="#2185b8">{url}</font>', bullet_style))
+for name, url, live in projects_en:
+    if live:
+        story.append(Paragraph(f'•  <b>{name}</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Repo: <font color="#2185b8">{url}</font> &nbsp;|&nbsp; Live: <font color="#2185b8">{live}</font>', bullet_style))
+    else:
+        story.append(Paragraph(f'•  <b>{name}</b> &nbsp;|&nbsp; <font color="#2185b8">{url}</font>', bullet_style))
 story.append(Spacer(1, 3))
 
 # ── Skills ──
