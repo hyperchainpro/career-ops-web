@@ -157,6 +157,8 @@ story.extend(section_header('PROJECT PORTFOLIO'))
 story.append(Paragraph('Featured projects with public repository links for verification:', body_style))
 
 projects_en = [
+    ('TRADIX - AI-Powered Stock Trading Platform (Hackathon PIDI Digdaya BI 2026 Project)',
+     'https://github.com/hyperchainpro/TRADIX'),
     ('HyperChain Pro - AI-Powered Design Platform with BranchBoard',
      'https://github.com/hyperchainpro/hyperchainpro'),
     ('PathMentor AI - Adaptive AI Tutor for High-School Students (Gemini XPRIZE 2026)',
