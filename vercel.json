@@ -1,0 +1,17 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "regions": ["sin1"],
+  "functions": {
+    "src/app/api/evaluate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/cover-letter/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/interview/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}
