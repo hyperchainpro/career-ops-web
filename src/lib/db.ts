@@ -1,59 +1,69 @@
 import { PrismaClient } from "@prisma/client";
 
-// Singleton pattern for PrismaClient
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+// Singleton pattern - must be global to survive HMR in dev
+// and to share connection pool across serverless invocations
 
-function createPrismaClient(): PrismaClient {
+let prismaClient: PrismaClient | null = null;
+
+export function getDb(): PrismaClient {
+  if (prismaClient) return prismaClient;
+
   const databaseUrl =
     process.env.POSTGRES_PRISMA_URL ||
     process.env.DATABASE_URL ||
     process.env.POSTGRES_URL;
 
   if (!databaseUrl) {
-    throw new Error(
-      "No DATABASE_URL, POSTGRES_PRISMA_URL, or POSTGRES_URL env var set"
-    );
+    throw new Error("Database URL not configured");
   }
 
-  return new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  // Create new PrismaClient with explicit datasource URL
+  prismaClient = new PrismaClient({
+    log: ["error"],
     datasources: {
       db: {
         url: databaseUrl,
       },
     },
   });
-}
 
-// Get or create the singleton PrismaClient
-function getPrisma(): PrismaClient {
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = createPrismaClient();
+  // Cache in global for dev HMR
+  if (process.env.NODE_ENV !== "production") {
+    const g = globalThis as any;
+    if (!g.prisma) g.prisma = prismaClient;
   }
-  return globalForPrisma.prisma;
+
+  return prismaClient;
 }
 
-// Export the PrismaClient directly
-// We access it via a function to ensure lazy initialization
-export const db: PrismaClient = new Proxy({} as PrismaClient, {
-  get(_target, prop, receiver) {
-    const prisma = getPrisma();
-    const value = Reflect.get(prisma, prop, receiver);
-    if (typeof value === "function") {
-      return value.bind(prisma);
-    }
-    return value;
+// For convenience - but must call getDb() inside the request handler
+// not at module level (which would fail in serverless cold start)
+export const db = {
+  jobApplication: {
+    findMany: (...args: any[]) => getDb().jobApplication.findMany(...args),
+    findUnique: (...args: any[]) => getDb().jobApplication.findUnique(...args),
+    findFirst: (...args: any[]) => getDb().jobApplication.findFirst(...args),
+    create: (...args: any[]) => getDb().jobApplication.create(...args),
+    update: (...args: any[]) => getDb().jobApplication.update(...args),
+    delete: (...args: any[]) => getDb().jobApplication.delete(...args),
+    deleteMany: (...args: any[]) => getDb().jobApplication.deleteMany(...args),
+    count: (...args: any[]) => getDb().jobApplication.count(...args),
+    groupBy: (...args: any[]) => getDb().jobApplication.groupBy(...args),
   },
-});
+  scanLog: {
+    findMany: (...args: any[]) => getDb().scanLog.findMany(...args),
+    create: (...args: any[]) => getDb().scanLog.create(...args),
+    deleteMany: (...args: any[]) => getDb().scanLog.deleteMany(...args),
+    count: (...args: any[]) => getDb().scanLog.count(...args),
+  },
+};
 
 // Auto-cleanup function: delete records older than 30 days
 export async function cleanupOldRecords(daysOld: number = 30): Promise<{
   deletedApplications: number;
   deletedLogs: number;
 }> {
-  const prisma = getPrisma();
+  const prisma = getDb();
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - daysOld);
 
