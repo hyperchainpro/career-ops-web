@@ -1,12 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
-// Singleton pattern for PrismaClient - works in serverless environments
+// Singleton pattern for PrismaClient
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
 function createPrismaClient(): PrismaClient {
-  // Check env vars in order of preference
   const databaseUrl =
     process.env.POSTGRES_PRISMA_URL ||
     process.env.DATABASE_URL ||
@@ -28,53 +27,49 @@ function createPrismaClient(): PrismaClient {
   });
 }
 
-// Initialize lazily - only when first used
-let _prisma: PrismaClient | null = null;
-
+// Get or create the singleton PrismaClient
 function getPrisma(): PrismaClient {
-  if (!_prisma) {
-    _prisma = globalForPrisma.prisma ?? createPrismaClient();
-    if (process.env.NODE_ENV !== "production") {
-      globalForPrisma.prisma = _prisma;
-    }
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient();
   }
-  return _prisma;
+  return globalForPrisma.prisma;
 }
 
-// Export getter instead of proxy
-export const db = {
-  get jobApplication() {
-    return getPrisma().jobApplication;
+// Export the PrismaClient directly
+// We access it via a function to ensure lazy initialization
+export const db: PrismaClient = new Proxy({} as PrismaClient, {
+  get(_target, prop, receiver) {
+    const prisma = getPrisma();
+    const value = Reflect.get(prisma, prop, receiver);
+    if (typeof value === "function") {
+      return value.bind(prisma);
+    }
+    return value;
   },
-  get scanLog() {
-    return getPrisma().scanLog;
-  },
-};
-
-// Also export prisma directly for advanced use
-export { getPrisma as prisma };
+});
 
 // Auto-cleanup function: delete records older than 30 days
 export async function cleanupOldRecords(daysOld: number = 30): Promise<{
   deletedApplications: number;
   deletedLogs: number;
 }> {
-  const client = getPrisma();
+  const prisma = getPrisma();
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - daysOld);
 
-  const deletedApps = await client.jobApplication.deleteMany({
-    where: {
-      createdAt: { lt: cutoff },
-      status: { notIn: ["interview", "offer"] },
-    },
-  });
-
-  const deletedLogs = await client.scanLog.deleteMany({
-    where: {
-      createdAt: { lt: cutoff },
-    },
-  });
+  const [deletedApps, deletedLogs] = await Promise.all([
+    prisma.jobApplication.deleteMany({
+      where: {
+        createdAt: { lt: cutoff },
+        status: { notIn: ["interview", "offer"] },
+      },
+    }),
+    prisma.scanLog.deleteMany({
+      where: {
+        createdAt: { lt: cutoff },
+      },
+    }),
+  ]);
 
   return {
     deletedApplications: deletedApps.count,
