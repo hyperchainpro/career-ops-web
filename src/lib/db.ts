@@ -56,6 +56,15 @@ export const db = {
     deleteMany: (...args: any[]) => getDb().scanLog.deleteMany(...args),
     count: (...args: any[]) => getDb().scanLog.count(...args),
   },
+  user: {
+    findUnique: (...args: any[]) => getDb().user.findUnique(...args),
+    findFirst: (...args: any[]) => getDb().user.findFirst(...args),
+    findMany: (...args: any[]) => getDb().user.findMany(...args),
+    create: (...args: any[]) => getDb().user.create(...args),
+    update: (...args: any[]) => getDb().user.update(...args),
+    delete: (...args: any[]) => getDb().user.delete(...args),
+    count: (...args: any[]) => getDb().user.count(...args),
+  },
 };
 
 // Auto-cleanup function: delete records older than 30 days

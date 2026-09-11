@@ -1,6 +1,6 @@
-// Prisma schema for Career Ops AI
+// Job4You - Prisma schema
 // Database: Neon PostgreSQL (serverless)
-// Auto-deletes records older than 30 days via cleanup API
+// Multi-user job search platform with ATS resume checker
 
 generator client {
   provider = "prisma-client-js"
@@ -11,37 +11,68 @@ datasource db {
   url       = env("DATABASE_URL")
 }
 
+// ── User Model (Authentication - no email verification) ──
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  password      String   // hashed with bcrypt
+  headline      String?  // e.g., "UI/UX Designer & AI Engineer"
+  location      String?
+  bio           String?
+  cvText        String?  @db.Text  // user's CV in markdown for AI evaluation
+  role          String   @default("user") // user | admin
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  applications  JobApplication[]
+}
+
+// ── Job Application Tracker ──
 model JobApplication {
   id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   // Job details
   jobTitle      String
   companyName   String
   jobUrl        String
-  jobLocation   String? // e.g., "Remote", "Jakarta, Indonesia"
-  jobLevel      String? // "internship" | "junior" | "intermediate" | "senior"
-  jobType       String? // "full-time" | "contract" | "internship" | "freelance"
-  jobSource     String? // "greenhouse" | "workable" | "manual" | "linkedin"
+  jobLocation   String?
+  jobCountry    String?  // e.g., "Indonesia", "United States", "Remote"
+  jobLevel      String?  // internship | junior | intermediate | senior
+  jobType       String?  // full-time | contract | internship | freelance
+  jobSource     String?  // greenhouse | lever | ashby | workable | manual
+  jobCategory   String?  // design | engineering | ai | product | marketing | data
+  jobDescription String? @db.Text
+
   // Match & evaluation
-  matchScore    Int?     // 0-100
-  evaluation    Json?    // AI evaluation result (full markdown)
-  coverLetter   String?  // Generated cover letter
+  matchScore    Int?
+  atsScore      Int?     // ATS resume match score (0-100)
+  evaluation    Json?
+  coverLetter   String?  @db.Text
+  interviewPrep String?  @db.Text
+
   // Application tracking
-  status        String   @default("to_apply") // to_apply | applied | interview | offer | rejected
+  status        String   @default("to_apply")
   appliedAt     DateTime?
   interviewDate DateTime?
-  notes         String?
-  // Metadata
+  notes         String?  @db.Text
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  @@index([userId])
   @@index([status])
   @@index([createdAt])
-  @@index([companyName])
+  @@index([jobCountry])
+  @@index([jobCategory])
 }
 
+// ── Scan Log ──
 model ScanLog {
   id            String   @id @default(cuid())
-  source        String   // "greenhouse" | "workable"
+  source        String
   query         String?
   resultsFound  Int      @default(0)
   resultsSaved  Int      @default(0)

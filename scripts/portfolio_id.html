@@ -343,16 +343,72 @@
       <div class="section-divider"></div>
     </div>
     <div class="body-text">
-      Berikut adalah 10 proyek unggulan yang memperlihatkan kombinasi keahlian UI/UX Design dan AI Engineering — dari platform desain berbasis AI hingga pipeline MLOps otomatis. Setiap entri ditampilkan layaknya halaman repository GitHub dengan badge tech stack, code snippet, dan key metrics. Semua link repository dapat diakses untuk verifikasi.
+      Berikut adalah 11 proyek unggulan yang memperlihatkan kombinasi keahlian UI/UX Design dan AI Engineering — dari platform desain berbasis AI hingga pipeline MLOps otomatis. Setiap entri ditampilkan layaknya halaman repository GitHub dengan badge tech stack, code snippet, dan key metrics. Semua link repository dapat diakses untuk verifikasi.
     </div>
 
-    <!-- PROJECT 1: TRADIX (FEATURED - PIDI Digdaya 2026) -->
+    <!-- PROJECT 1: Job4You (FEATURED - AI-Powered Remote Job Search Platform) -->
     <div class="project-card" style="border: 1px solid #d29922; box-shadow: 0 0 12px rgba(210, 153, 34, 0.15);">
       <div class="repo-header" style="background: linear-gradient(90deg, rgba(210, 153, 34, 0.15), var(--c-bg-tertiary));">
         <div class="repo-title">
           <svg class="repo-icon" viewBox="0 0 16 16" style="fill: #d29922;"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
-          <a class="repo-name" href="https://github.com/hyperchainpro/TRADIX" style="color: #d29922;">TRADIX</a>
-          <span class="visibility-badge" style="border-color: #d29922; color: #d29922; background: rgba(210, 153, 34, 0.1);">★ Featured · Private</span>
+          <a class="repo-name" href="https://github.com/hyperchainpro/career-ops-web" style="color: #d29922;">career-ops-web</a>
+          <span class="visibility-badge" style="border-color: #d29922; color: #d29922; background: rgba(210, 153, 34, 0.1);">★ Featured · Public</span>
+        </div>
+        <div class="repo-updated">TypeScript · Next.js 16 · Nov 2025</div>
+      </div>
+      <div class="repo-body">
+        <div class="repo-tagline">Job4You · AI-Powered Remote Job Search Platform + ATS Resume Checker</div>
+        <div class="repo-desc">
+          Platform pencarian kerja remote berbasis AI yang membantu <strong>remote job seekers di seluruh dunia</strong> menemukan lowongan dari 80+ perusahaan global melalui integrasi Greenhouse &amp; Lever APIs. Dilengkapi ATS Resume Checker berbasis 19 model AI gratis via OpenRouter, application tracker (CRUD), cover letter generator, dan interview prep. Live di <strong>job4you.vercel.app</strong> dengan biaya operasional $0/bulan menggunakan free tier semua service.
+        </div>
+        <div class="tech-badges">
+          <span class="tech-badge" style="--badge-color: #ffffff">Next.js 16</span>
+          <span class="tech-badge" style="--badge-color: #3178c6">TypeScript</span>
+          <span class="tech-badge" style="--badge-color: #38bdf8">Tailwind CSS 4</span>
+          <span class="tech-badge" style="--badge-color: #5a67d8">Prisma ORM</span>
+          <span class="tech-badge" style="--badge-color: #10b981">Neon PostgreSQL</span>
+          <span class="tech-badge" style="--badge-color: #f97316">OpenRouter AI (19 models)</span>
+          <span class="tech-badge" style="--badge-color: #8b5cf6">NextAuth.js</span>
+          <span class="tech-badge" style="--badge-color: #ffffff">Vercel Cron</span>
+          <span class="tech-badge" style="--badge-color: #2f9e44">Greenhouse + Lever APIs</span>
+          <span class="tech-badge" style="--badge-color: #61dafb">shadcn/ui</span>
+        </div>
+        <div class="features">
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Multi-source Job Scanner</strong>: integrasi Greenhouse + Lever APIs untuk memindai lowongan dari 80+ perusahaan global secara real-time</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>ATS Resume Checker AI</strong>: analisis resume dengan 19 model AI gratis via OpenRouter (DeepSeek, Llama, Gemini, Mistral, dll), skor ATS &amp; saran perbaikan otomatis</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Application Tracker (CRUD)</strong>: track semua lamaran dengan status, deadline, catatan, dan link aplikasi</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Cover Letter Generator</strong>: generate surat lamaran berbasis job description dengan AI</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Interview Prep</strong>: latihan interview dengan AI feedback untuk berbagai tipe pertanyaan</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Dashboard &amp; Stats</strong>: visualisasi progress lamaran, response rate, dan analytics real-time</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Auto-cleanup (Vercel Cron)</strong>: penghapusan otomatis data lamaran yang lebih dari 30 hari</span></div>
+          <div class="feature"><span class="feature-icon">▸</span><span><strong>Multi-user Authentication</strong>: NextAuth.js dengan session management &amp; role-based access untuk multi-user platform</span></div>
+        </div>
+        <div class="code-block"><span class="code-comment">// Multi-source job scanner — unified interface</span>
+<span class="code-keyword">const</span> <span class="code-property">jobs</span> = <span class="code-keyword">await</span> job4you.<span class="code-property">scan</span>({
+  <span class="code-property">sources</span>: [<span class="code-string">'greenhouse'</span>, <span class="code-string">'lever'</span>],
+  <span class="code-property">query</span>: <span class="code-string">'remote frontend'</span>,
+  <span class="code-property">limit</span>: <span class="code-string">50</span>
+});
+<span class="code-comment">// 80+ companies · 19 AI models · $0/month · multi-user</span></div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">80+</div><div class="stat-label">Companies Scanned</div></div>
+          <div class="stat-item"><div class="stat-value">19</div><div class="stat-label">Free AI Models</div></div>
+          <div class="stat-item"><div class="stat-value">$0</div><div class="stat-label">Monthly Cost</div></div>
+          <div class="stat-item"><div class="stat-value">Multi</div><div class="stat-label">User Platform</div></div>
+          <div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Remote Focus</div></div>
+          <div class="stat-item"><div class="stat-value">30d</div><div class="stat-label">Auto-cleanup</div></div>
+        </div>
+        <div class="repo-url" style="background: rgba(210, 153, 34, 0.1); border-color: rgba(210, 153, 34, 0.4); color: #d29922;"><span>→</span><span>github.com/hyperchainpro/career-ops-web &nbsp;·&nbsp; Live: job4you.vercel.app</span></div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: TRADIX (PIDI Digdaya 2026) -->
+    <div class="project-card">
+      <div class="repo-header">
+        <div class="repo-title">
+          <svg class="repo-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+          <a class="repo-name" href="https://github.com/hyperchainpro/TRADIX">TRADIX</a>
+          <span class="visibility-badge">Private</span>
         </div>
         <div class="repo-updated">TypeScript · Expo · Jul 2026</div>
       </div>
@@ -398,11 +454,11 @@
           <div class="stat-item"><div class="stat-value">60%</div><div class="stat-label">Faster Response</div></div>
           <div class="stat-item"><div class="stat-value">-70%</div><div class="stat-label">API Calls</div></div>
         </div>
-        <div class="repo-url" style="background: rgba(210, 153, 34, 0.1); border-color: rgba(210, 153, 34, 0.4); color: #d29922;"><span>→</span><span>github.com/hyperchainpro/TRADIX &nbsp;·&nbsp; Live: tradix-app.pages.dev</span></div>
+        <div class="repo-url"><span>→</span><span>github.com/hyperchainpro/TRADIX &nbsp;·&nbsp; Live: tradix-app.pages.dev</span></div>
       </div>
     </div>
 
-    <!-- PROJECT 2: LayerBoard -->
+    <!-- PROJECT 3: LayerBoard -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -444,7 +500,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 2: PathMentor AI -->
+    <!-- PROJECT 4: PathMentor AI -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -492,7 +548,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 3: DapurMind AI -->
+    <!-- PROJECT 5: DapurMind AI -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -540,7 +596,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 4: CR AutoPilot -->
+    <!-- PROJECT 6: CR AutoPilot -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -584,7 +640,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 5: Food Recognizer -->
+    <!-- PROJECT 7: Food Recognizer -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -629,7 +685,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 6: Workflow-CI MLOps -->
+    <!-- PROJECT 8: Workflow-CI MLOps -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -678,7 +734,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 7: NeuroPilot -->
+    <!-- PROJECT 9: NeuroPilot -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -719,7 +775,7 @@
       </div>
     </div>
 
-    <!-- PROJECT 8: Eksperimen SML -->
+    <!-- PROJECT 10: Eksperimen SML -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -765,7 +821,7 @@ df_clean.to_csv(<span class="code-string">'breastcancer_preprocessed.csv'</span>
       </div>
     </div>
 
-    <!-- PROJECT 9: Hyperchain Landing -->
+    <!-- PROJECT 11: Hyperchain Landing -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">
@@ -808,7 +864,7 @@ df_clean.to_csv(<span class="code-string">'breastcancer_preprocessed.csv'</span>
       </div>
     </div>
 
-    <!-- PROJECT 10: HYP Convert -->
+    <!-- PROJECT 12: HYP Convert -->
     <div class="project-card">
       <div class="repo-header">
         <div class="repo-title">

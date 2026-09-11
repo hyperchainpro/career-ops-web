@@ -186,6 +186,9 @@ story.extend(section_header('PROJECT PORTOFOLIO'))
 story.append(Paragraph('Berikut project unggulan dengan link repository publik untuk verifikasi:', body_style))
 
 projects_id = [
+    ('Job4You - AI-Powered Remote Job Search Platform + ATS Resume Checker',
+     'https://github.com/hyperchainpro/career-ops-web',
+     'https://job4you.vercel.app'),
     ('TRADIX - AI-Powered Stock Trading Platform (Project Hackathon PIDI Digdaya BI 2026)',
      'https://github.com/hyperchainpro/TRADIX',
      'https://tradix-app.pages.dev'),

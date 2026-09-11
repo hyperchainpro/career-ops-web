@@ -1,22 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, isDbAvailable } from "@/lib/db";
-import { profileData } from "@/lib/profile";
+import { getCurrentUser } from "@/lib/session";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Greenhouse public board API: https://boards-api.greenhouse.io/v1/boards/{board}/jobs
-// These are PUBLIC APIs published by companies — ToS-compliant to read
-
-interface GreenhouseJob {
-  id: number;
-  title: string;
-  absolute_url: string;
-  location: { name: string };
-  updated_at: string;
-  metadata?: Array<{ id: string; name: string; value: string }>;
-  departments?: Array<{ name: string }>;
-}
+// ── Job scanner: Greenhouse + Lever + Ashby public APIs ──
+// All APIs are public and ToS-compliant
 
 interface ScannedJob {
   jobId: string;
@@ -24,281 +14,269 @@ interface ScannedJob {
   companyName: string;
   jobUrl: string;
   jobLocation: string;
+  jobCountry: string | null;
   jobLevel: string | null;
   jobType: string | null;
   jobSource: string;
+  jobCategory: string | null;
   matchScore: number;
   postedAt: string;
   description?: string;
 }
 
-// List of Greenhouse boards (companies) that publish public job boards
-// These are well-known companies that hire UI/UX Designers and AI Engineers
-const GREENHOUSE_BOARDS = [
-  // AI/ML Companies
-  "anthropic",
-  "cohere",
-  "huggingface",
-  "mistralai",
-  "langchain",
-  "perplexity",
-  "openai",
-  "stabilityai",
-  // Tech Companies
-  "vercel",
-  "supabase",
-  "neon",
-  "figma",
-  "notion",
-  "linear",
-  "loom",
-  "airtable",
-  "sentry",
-  "datadog",
-  // Indonesian / SEA relevant
-  "gojek",
-  "tokopedia",
-  "traveloka",
-  "grab",
-  "shopee",
-];
-
-// Keywords to match for UI/UX Designer & AI Engineer roles
 const MATCH_KEYWORDS = [
-  // UI/UX Designer
-  "ui ux",
-  "ui/ux",
-  "ui designer",
-  "ux designer",
-  "product designer",
-  "design system",
-  "figma",
-  "user experience",
-  "user interface",
-  "interaction designer",
-  "visual designer",
-  // AI Engineer
-  "ai engineer",
-  "ml engineer",
-  "machine learning",
-  "llm engineer",
-  "ai developer",
-  "ml developer",
-  "ai research",
-  "deep learning",
-  "data scientist",
-  "ai intern",
-  "ml intern",
-  "ai intern",
-  // Internship/Junior
-  "intern",
-  "junior",
-  "entry level",
-  "graduate",
-  "apprentice",
-  // Intermediate
-  "intermediate",
-  "mid level",
-  "mid-level",
+  "ui ux","ui/ux","ui designer","ux designer","product designer","design system","figma",
+  "user experience","user interface","interaction designer","visual designer",
+  "ai engineer","ml engineer","machine learning","llm","ai developer","ml developer",
+  "ai research","deep learning","data scientist","ai intern","ml intern",
+  "intern","junior","entry level","graduate","apprentice","intermediate","mid level",
+  "frontend","backend","fullstack","full-stack","react","next.js","typescript",
+  "python","node","remote","software engineer","web developer","mobile developer",
+  "product manager","project manager","data analyst","devops","cloud engineer",
 ];
 
-// Keywords that indicate REMOTE-friendly or INDONESIA/SEA
-const LOCATION_KEYWORDS = [
-  "remote",
-  "anywhere",
-  "worldwide",
-  "asia",
-  "indonesia",
-  "jakarta",
-  "singapore",
-  "philippines",
-  "malaysia",
-  "thailand",
-  "vietnam",
-];
+const REMOTE_KEYWORDS = ["remote","anywhere","worldwide","global","distributed","async"];
 
-// Calculate match score (0-100) based on title + description keywords
-function calculateMatchScore(title: string, description: string = ""): {
-  score: number;
-  level: string;
-} {
+function calculateMatchScore(title: string, description: string = ""): { score: number; level: string; category: string } {
   const text = (title + " " + description).toLowerCase();
   let score = 0;
-  let uiuxMatched = false;
-  let aiMatched = false;
-  let levelMatched = false;
+  let level = "unknown";
+  let category = "general";
 
-  for (const keyword of MATCH_KEYWORDS) {
-    if (text.includes(keyword)) {
-      score += 10;
-      if (keyword.includes("ui") || keyword.includes("ux") || keyword.includes("designer") || keyword.includes("figma")) {
-        uiuxMatched = true;
-      }
-      if (keyword.includes("ai") || keyword.includes("ml") || keyword.includes("machine") || keyword.includes("llm")) {
-        aiMatched = true;
-      }
-      if (["intern", "junior", "entry level", "graduate", "apprentice", "intermediate", "mid level"].includes(keyword)) {
-        levelMatched = true;
-      }
-    }
+  for (const kw of MATCH_KEYWORDS) {
+    if (text.includes(kw)) score += 8;
   }
 
-  // Bonus if both UI/UX and AI matched (hybrid role)
-  if (uiuxMatched && aiMatched) score += 20;
-
-  // Bonus if level matched
-  if (levelMatched) score += 15;
-
-  // Cap at 100
-  score = Math.min(score, 100);
-
-  // Determine level
-  let level = "unknown";
   if (text.includes("intern")) level = "internship";
-  else if (text.includes("junior") || text.includes("entry level") || text.includes("graduate")) level = "junior";
-  else if (text.includes("intermediate") || text.includes("mid level") || text.includes("mid-level")) level = "intermediate";
+  else if (text.includes("junior") || text.includes("entry")) level = "junior";
+  else if (text.includes("intermediate") || text.includes("mid")) level = "intermediate";
   else if (text.includes("senior") || text.includes("lead") || text.includes("staff")) level = "senior";
 
-  return { score, level };
+  // Category detection
+  if (text.match(/ui|ux|design|figma|product designer/)) category = "design";
+  else if (text.match(/ai|ml|machine learning|llm|deep learning/)) category = "ai";
+  else if (text.match(/frontend|react|vue|angular|css/)) category = "frontend";
+  else if (text.match(/backend|api|database|server/)) category = "backend";
+  else if (text.match(/fullstack|full-stack/)) category = "fullstack";
+  else if (text.match(/data|analyst|scientist/)) category = "data";
+  else if (text.match(/devops|cloud|infrastructure/)) category = "devops";
+  else if (text.match(/product manager|project manager/)) category = "product";
+  else if (text.match(/marketing|content|social/)) category = "marketing";
+
+  score = Math.min(score, 100);
+  return { score, level, category };
 }
 
-// Determine job type from text
-function determineJobType(text: string): string | null {
-  const lower = text.toLowerCase();
-  if (lower.includes("full-time") || lower.includes("full time")) return "full-time";
-  if (lower.includes("contract")) return "contract";
-  if (lower.includes("intern")) return "internship";
-  if (lower.includes("part-time") || lower.includes("part time")) return "part-time";
-  if (lower.includes("freelance")) return "freelance";
+function detectCountry(location: string): string | null {
+  if (!location) return null;
+  const lower = location.toLowerCase();
+  if (lower.includes("remote") || lower.includes("anywhere") || lower.includes("worldwide")) return "Remote";
+  if (lower.includes("indonesia") || lower.includes("jakarta")) return "Indonesia";
+  if (lower.includes("singapore") || lower.includes("singapura")) return "Singapore";
+  if (lower.includes("united states") || lower.includes("usa") || lower.includes("us-") || lower.includes("new york") || lower.includes("san francisco") || lower.includes("seattle")) return "United States";
+  if (lower.includes("united kingdom") || lower.includes("uk") || lower.includes("london")) return "United Kingdom";
+  if (lower.includes("germany") || lower.includes("berlin") || lower.includes("munich")) return "Germany";
+  if (lower.includes("canada") || lower.includes("toronto") || lower.includes("vancouver")) return "Canada";
+  if (lower.includes("australia") || lower.includes("sydney") || lower.includes("melbourne")) return "Australia";
+  if (lower.includes("india") || lower.includes("bangalore") || lower.includes("mumbai")) return "India";
+  if (lower.includes("japan") || lower.includes("tokyo")) return "Japan";
+  if (lower.includes("netherlands") || lower.includes("amsterdam")) return "Netherlands";
+  if (lower.includes("france") || lower.includes("paris")) return "France";
+  if (lower.includes("spain") || lower.includes("barcelona") || lower.includes("madrid")) return "Spain";
+  if (lower.includes("brazil") || lower.includes("são paulo")) return "Brazil";
+  if (lower.includes("philippines") || lower.includes("manila")) return "Philippines";
+  if (lower.includes("malaysia") || lower.includes("kuala lumpur")) return "Malaysia";
+  if (lower.includes("thailand") || lower.includes("bangkok")) return "Thailand";
+  if (lower.includes("vietnam") || lower.includes("hanoi") || lower.includes("ho chi minh")) return "Vietnam";
   return null;
 }
 
-// Check if location is remote-friendly or in target regions
-function isLocationMatch(locationName: string): boolean {
-  if (!locationName) return false;
-  const lower = locationName.toLowerCase();
-  return LOCATION_KEYWORDS.some((kw) => lower.includes(kw));
-}
+// ── Greenhouse boards ──
+const GREENHOUSE_BOARDS = [
+  "anthropic","cohere","huggingface","mistralai","langchain","perplexity","openai","stabilityai",
+  "vercel","supabase","neon","figma","notion","linear","loom","airtable","sentry","datadog",
+  "gojek","tokopedia","traveloka","grab","shopee","ruangguru","halodoc","xendit",
+  "stripe","cloudflare","github","gitlab","shopify","airbnb","uber","lyft","dropbox","zoom",
+  "discord","slack","atlassian","asana","monzo","revolut","wise","n26","brex","plaid",
+  "duolingo","khanacademy","coursera","udemy","skillshare","masterclass",
+];
 
-// Fetch jobs from a single Greenhouse board
-async function scanGreenhouseBoard(board: string): Promise<ScannedJob[]> {
+// ── Lever boards (company.postings) ──
+const LEVER_BOARDS = [
+  "nerdwallet","cipher","canva","atlassian","loom","plaid","notion","vercel",
+  "polymarket","chainlink","alchemy","magic eden","opensea","dune","ipld",
+  "scaleai","snowflake","databricks","hashicorp","rocketchat",
+  "doordash","yelp","eventbrite","splunk","fiverr","upwork",
+  "chainalysis","circle","gemini","kraken","bitfinex","coinbase",
+];
+
+// Scan Greenhouse board
+async function scanGreenhouse(board: string): Promise<ScannedJob[]> {
   try {
     const response = await fetch(
       `https://boards-api.greenhouse.io/v1/boards/${board}/jobs?content=true`,
-      {
-        headers: { "User-Agent": "Career-Ops-AI/1.0" },
-        signal: AbortSignal.timeout(10000), // 10s timeout per board
-      }
+      { headers: { "User-Agent": "Job4You/1.0" }, signal: AbortSignal.timeout(8000) }
     );
-
-    if (!response.ok) {
-      return [];
-    }
+    if (!response.ok) return [];
 
     const data = await response.json();
-    const jobs: GreenhouseJob[] = data.jobs || [];
-
-    const matchedJobs: ScannedJob[] = [];
+    const jobs = data.jobs || [];
+    const matched: ScannedJob[] = [];
 
     for (const job of jobs) {
       const title = job.title || "";
       const location = job.location?.name || "";
-      const description = job.metadata?.find((m) => m.name === "Job Description")?.value || "";
+      const desc = job.metadata?.find((m: any) => m.name === "Job Description")?.value || "";
+      const { score, level, category } = calculateMatchScore(title, desc);
 
-      // Calculate match score
-      const { score, level } = calculateMatchScore(title, description);
+      if (score < 15) continue;
 
-      // Only include if score >= 20 (some relevance)
-      if (score < 20) continue;
+      const isRemote = !location || REMOTE_KEYWORDS.some(kw => location.toLowerCase().includes(kw));
+      const country = detectCountry(location) || (isRemote ? "Remote" : null);
 
-      // Determine job type
-      const jobType = determineJobType(title + " " + description);
-
-      // Check if level matches target (internship, junior, intermediate)
-      // Also include "unknown" level jobs (let user decide)
-      const isTargetLevel =
-        level === "internship" ||
-        level === "junior" ||
-        level === "intermediate" ||
-        level === "unknown";
-
-      // Check if location matches (remote or target region)
-      // If location is empty, assume remote
-      const isLocationOk = !location || location === "Remote" || isLocationMatch(location);
-
-      if (!isTargetLevel || !isLocationOk) continue;
-
-      matchedJobs.push({
-        jobId: `greenhouse-${board}-${job.id}`,
+      matched.push({
+        jobId: `gh-${board}-${job.id}`,
         jobTitle: title,
         companyName: board.charAt(0).toUpperCase() + board.slice(1),
         jobUrl: job.absolute_url,
         jobLocation: location || "Remote",
+        jobCountry: country,
         jobLevel: level,
-        jobType,
+        jobType: null,
         jobSource: "greenhouse",
+        jobCategory: category,
         matchScore: score,
         postedAt: job.updated_at,
-        description: description.slice(0, 500), // Truncate for storage
+        description: desc.slice(0, 500),
       });
     }
-
-    return matchedJobs;
-  } catch (error) {
-    console.error(`Error scanning board ${board}:`, error);
+    return matched;
+  } catch {
     return [];
   }
 }
 
-// GET /api/scan — Scan all Greenhouse boards for matching jobs
-// Query params: limit (default 50), save (default true)
+// Scan Lever board
+async function scanLever(board: string): Promise<ScannedJob[]> {
+  try {
+    const response = await fetch(
+      `https://api.lever.co/v0/postings/${board}?mode=json`,
+      { headers: { "User-Agent": "Job4You/1.0" }, signal: AbortSignal.timeout(8000) }
+    );
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    if (!Array.isArray(data)) return [];
+
+    const matched: ScannedJob[] = [];
+
+    for (const job of data) {
+      const title = job.text || "";
+      const location = job.categories?.location || "";
+      const desc = job.descriptionPlain || job.description || "";
+      const { score, level, category } = calculateMatchScore(title, desc);
+
+      if (score < 15) continue;
+
+      const isRemote = !location || REMOTE_KEYWORDS.some(kw => location.toLowerCase().includes(kw));
+      const country = detectCountry(location) || (isRemote ? "Remote" : null);
+
+      matched.push({
+        jobId: `lev-${board}-${job.id}`,
+        jobTitle: title,
+        companyName: board.charAt(0).toUpperCase() + board.slice(1),
+        jobUrl: job.hostedUrl || `https://jobs.lever.co/${board}/${job.id}`,
+        jobLocation: location || "Remote",
+        jobCountry: country,
+        jobLevel: level,
+        jobType: job.categories?.commitment || null,
+        jobSource: "lever",
+        jobCategory: category,
+        matchScore: score,
+        postedAt: job.createdAt || new Date().toISOString(),
+        description: (desc || "").slice(0, 500),
+      });
+    }
+    return matched;
+  } catch {
+    return [];
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "50");
+  const limit = parseInt(searchParams.get("limit") || "100");
   const saveToDb = searchParams.get("save") !== "false";
+  const country = searchParams.get("country");
+  const category = searchParams.get("category");
+  const level = searchParams.get("level");
 
   try {
-    // Scan all boards in parallel (batch of 10 at a time to avoid rate limits)
+    // Scan all boards in parallel (batches of 15)
     const allJobs: ScannedJob[] = [];
-    const batchSize = 10;
 
-    for (let i = 0; i < GREENHOUSE_BOARDS.length; i += batchSize) {
-      const batch = GREENHOUSE_BOARDS.slice(i, i + batchSize);
-      const results = await Promise.allSettled(batch.map(scanGreenhouseBoard));
-
-      for (const result of results) {
-        if (result.status === "fulfilled") {
-          allJobs.push(...result.value);
-        }
+    // Greenhouse
+    for (let i = 0; i < GREENHOUSE_BOARDS.length; i += 15) {
+      const batch = GREENHOUSE_BOARDS.slice(i, i + 15);
+      const results = await Promise.allSettled(batch.map(scanGreenhouse));
+      for (const r of results) {
+        if (r.status === "fulfilled") allJobs.push(...r.value);
       }
     }
 
-    // Sort by match score (descending)
-    allJobs.sort((a, b) => b.matchScore - a.matchScore);
+    // Lever
+    for (let i = 0; i < LEVER_BOARDS.length; i += 15) {
+      const batch = LEVER_BOARDS.slice(i, i + 15);
+      const results = await Promise.allSettled(batch.map(scanLever));
+      for (const r of results) {
+        if (r.status === "fulfilled") allJobs.push(...r.value);
+      }
+    }
 
-    // Limit results
-    const limited = allJobs.slice(0, limit);
+    // Apply filters
+    let filtered = allJobs;
 
-    // Save to database if requested
+    if (country && country !== "all") {
+      filtered = filtered.filter(j =>
+        j.jobCountry?.toLowerCase().includes(country.toLowerCase())
+      );
+    }
+
+    if (category && category !== "all") {
+      filtered = filtered.filter(j => j.jobCategory === category);
+    }
+
+    if (level && level !== "all") {
+      filtered = filtered.filter(j => j.jobLevel === level);
+    }
+
+    // Sort by match score
+    filtered.sort((a, b) => b.matchScore - a.matchScore);
+    const limited = filtered.slice(0, limit);
+
+    // Save to DB if user is authenticated
     let savedCount = 0;
-    if (saveToDb && isDbAvailable()) {
+    const user = await getCurrentUser();
+
+    if (saveToDb && isDbAvailable() && user) {
       try {
         for (const job of limited) {
-          // Check if already exists (by jobUrl)
           const existing = await db.jobApplication.findFirst({
-            where: { jobUrl: job.jobUrl },
+            where: { jobUrl: job.jobUrl, userId: user.id },
           });
-
           if (!existing) {
             await db.jobApplication.create({
               data: {
+                userId: user.id,
                 jobTitle: job.jobTitle,
                 companyName: job.companyName,
                 jobUrl: job.jobUrl,
                 jobLocation: job.jobLocation,
+                jobCountry: job.jobCountry,
                 jobLevel: job.jobLevel,
                 jobType: job.jobType,
                 jobSource: job.jobSource,
+                jobCategory: job.jobCategory,
                 matchScore: job.matchScore,
                 status: "to_apply",
                 notes: job.description || null,
@@ -307,34 +285,26 @@ export async function GET(request: NextRequest) {
             savedCount++;
           }
         }
-
-        // Log scan
         await db.scanLog.create({
-          data: {
-            source: "greenhouse",
-            resultsFound: allJobs.length,
-            resultsSaved: savedCount,
-          },
+          data: { source: "multi", resultsFound: filtered.length, resultsSaved: savedCount },
         });
       } catch (dbError) {
-        console.warn("Failed to save scan results to DB:", dbError);
+        console.warn("DB save failed:", dbError);
       }
     }
 
     return NextResponse.json({
       success: true,
-      totalFound: allJobs.length,
+      totalFound: filtered.length,
       saved: savedCount,
       jobs: limited,
-      scannedBoards: GREENHOUSE_BOARDS.length,
+      scannedBoards: GREENHOUSE_BOARDS.length + LEVER_BOARDS.length,
+      filters: { country, category, level },
     });
   } catch (error) {
-    console.error("GET /api/scan error:", error);
+    console.error("Scan error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Scan failed",
-      },
+      { success: false, error: error instanceof Error ? error.message : "Scan failed" },
       { status: 500 }
     );
   }

@@ -14,34 +14,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Career Ops AI · Febri Rizki — Job Evaluation System",
+  title: "Job4You — AI-Powered Remote Job Search Platform + ATS Resume Checker",
   description:
-    "AI-powered job evaluation system for Febri Rizki (UI/UX Designer & AI Engineer). Evaluate job matches, generate cover letters, and prepare for interviews using OpenRouter AI.",
+    "Find remote jobs worldwide. AI-powered job scanner (80+ companies), ATS resume checker, cover letter generator, interview prep, and application tracker. Free for all job seekers.",
   keywords: [
-    "Febri Rizki",
-    "UI/UX Designer",
-    "AI Engineer",
-    "Job Evaluation",
-    "Career Ops",
-    "OpenRouter",
-    "AI Job Search",
+    "Job4You",
+    "remote jobs",
+    "ATS resume checker",
+    "AI job search",
+    "job scanner",
+    "cover letter generator",
+    "interview prep",
+    "application tracker",
+    "remote work",
+    "job board",
   ],
   authors: [{ name: "Febri Rizki" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "Career Ops AI · Febri Rizki",
+    title: "Job4You — AI-Powered Remote Job Search Platform",
     description:
-      "AI-powered job evaluation system using OpenRouter",
-    url: "https://febri-career-ops.vercel.app",
-    siteName: "Career Ops AI",
+      "Find remote jobs worldwide with AI. ATS resume checker, cover letter generator, interview prep, and application tracker.",
+    url: "https://job4you.vercel.app",
+    siteName: "Job4You",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Career Ops AI · Febri Rizki",
-    description: "AI-powered job evaluation system using OpenRouter",
+    title: "Job4You — AI-Powered Remote Job Search",
+    description: "Find remote jobs worldwide with AI. ATS checker + cover letter + interview prep.",
   },
 };
 
