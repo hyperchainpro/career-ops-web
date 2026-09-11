@@ -1,64 +1,71 @@
 import { PrismaClient } from "@prisma/client";
 
-// Use lazy initialization so Prisma reads env vars at runtime, not at module load time
+// Singleton pattern for PrismaClient - works in serverless environments
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+function createPrismaClient(): PrismaClient {
+  // Check env vars in order of preference
+  const databaseUrl =
+    process.env.POSTGRES_PRISMA_URL ||
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_URL;
+
+  if (!databaseUrl) {
+    throw new Error(
+      "No DATABASE_URL, POSTGRES_PRISMA_URL, or POSTGRES_URL env var set"
+    );
+  }
+
+  return new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+    datasources: {
+      db: {
+        url: databaseUrl,
+      },
+    },
+  });
+}
+
+// Initialize lazily - only when first used
 let _prisma: PrismaClient | null = null;
 
-function getPrismaClient(): PrismaClient {
+function getPrisma(): PrismaClient {
   if (!_prisma) {
-    // Force Prisma to use the runtime env var
-    const databaseUrl =
-      process.env.POSTGRES_PRISMA_URL ||
-      process.env.DATABASE_URL ||
-      process.env.POSTGRES_URL;
-
-    if (!databaseUrl) {
-      throw new Error(
-        "No DATABASE_URL or POSTGRES_PRISMA_URL environment variable set"
-      );
+    _prisma = globalForPrisma.prisma ?? createPrismaClient();
+    if (process.env.NODE_ENV !== "production") {
+      globalForPrisma.prisma = _prisma;
     }
-
-    // Log for debugging (in dev only)
-    if (process.env.NODE_ENV === "development") {
-      console.log("[DB] Connecting to:", databaseUrl.replace(/:[^:@]+@/, ":***@"));
-    }
-
-    _prisma = new PrismaClient({
-      log:
-        process.env.NODE_ENV === "development"
-          ? ["error", "warn"]
-          : ["error"],
-      datasources: {
-        db: {
-          url: databaseUrl,
-        },
-      },
-    });
   }
   return _prisma;
 }
 
-// Export a proxy that lazily initializes Prisma
-export const db = new Proxy({} as PrismaClient, {
-  get(_target, prop) {
-    const client = getPrismaClient();
-    const value = (client as any)[prop];
-    return typeof value === "function" ? value.bind(client) : value;
+// Export getter instead of proxy
+export const db = {
+  get jobApplication() {
+    return getPrisma().jobApplication;
   },
-});
+  get scanLog() {
+    return getPrisma().scanLog;
+  },
+};
+
+// Also export prisma directly for advanced use
+export { getPrisma as prisma };
 
 // Auto-cleanup function: delete records older than 30 days
 export async function cleanupOldRecords(daysOld: number = 30): Promise<{
   deletedApplications: number;
   deletedLogs: number;
 }> {
-  const client = getPrismaClient();
+  const client = getPrisma();
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - daysOld);
 
   const deletedApps = await client.jobApplication.deleteMany({
     where: {
       createdAt: { lt: cutoff },
-      // Don't delete records that are actively in interview/offer stage
       status: { notIn: ["interview", "offer"] },
     },
   });
