@@ -13,6 +13,15 @@
     },
     "src/app/api/interview/route.ts": {
       "maxDuration": 60
+    },
+    "src/app/api/scan/route.ts": {
+      "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cleanup",
+      "schedule": "0 2 * * *"
+    }
+  ]
 }
