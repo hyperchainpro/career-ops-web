@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, cleanupOldRecords, isDbAvailable } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-// GET /api/applications — List all job applications
+// GET /api/applications — List user's job applications (requires auth)
 // Query params: status, search, limit, offset
 export async function GET(request: NextRequest) {
   if (!isDbAvailable()) {
@@ -15,14 +16,21 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Please sign in to view your applications" },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
     const search = searchParams.get("search");
     const limit = parseInt(searchParams.get("limit") || "100");
     const offset = parseInt(searchParams.get("offset") || "0");
 
-    // Build where clause
-    const where: any = {};
+    const where: any = { userId: user.id };
     if (status && status !== "all") {
       where.status = status;
     }
@@ -44,27 +52,17 @@ export async function GET(request: NextRequest) {
       db.jobApplication.count({ where }),
     ]);
 
-    return NextResponse.json({
-      success: true,
-      data: applications,
-      total,
-      limit,
-      offset,
-    });
+    return NextResponse.json({ success: true, data: applications, total, limit, offset });
   } catch (error) {
     console.error("GET /api/applications error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Database error",
-      },
+      { success: false, error: error instanceof Error ? error.message : "Database error" },
       { status: 500 }
     );
   }
 }
 
-// POST /api/applications — Create a new job application
-// Auto-runs cleanup of records >30 days on each POST
+// POST /api/applications — Create a new job application (requires auth)
 export async function POST(request: NextRequest) {
   if (!isDbAvailable()) {
     return NextResponse.json(
@@ -74,38 +72,42 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Please sign in to save applications" },
+        { status: 401 }
+      );
+    }
 
-    // Validate required fields
+    const body = await request.json();
     const { jobTitle, companyName, jobUrl } = body;
     if (!jobTitle || !companyName || !jobUrl) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Required fields: jobTitle, companyName, jobUrl",
-        },
+        { success: false, error: "Required fields: jobTitle, companyName, jobUrl" },
         { status: 400 }
       );
     }
 
-    // Auto-cleanup old records before insert (non-blocking, best-effort)
     let cleanupResult = null;
     try {
       cleanupResult = await cleanupOldRecords(30);
-    } catch (cleanupError) {
-      console.warn("Auto-cleanup failed (non-blocking):", cleanupError);
+    } catch (e) {
+      console.warn("Auto-cleanup failed:", e);
     }
 
-    // Create the application
     const application = await db.jobApplication.create({
       data: {
+        userId: user.id,
         jobTitle,
         companyName,
         jobUrl,
         jobLocation: body.jobLocation || null,
+        jobCountry: body.jobCountry || null,
         jobLevel: body.jobLevel || null,
         jobType: body.jobType || null,
         jobSource: body.jobSource || "manual",
+        jobCategory: body.jobCategory || null,
         matchScore: body.matchScore || null,
         evaluation: body.evaluation || null,
         coverLetter: body.coverLetter || null,
@@ -116,67 +118,48 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({
-      success: true,
-      data: application,
-      cleanup: cleanupResult,
-    });
+    return NextResponse.json({ success: true, data: application, cleanup: cleanupResult });
   } catch (error) {
     console.error("POST /api/applications error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Database error",
-      },
+      { success: false, error: error instanceof Error ? error.message : "Database error" },
       { status: 500 }
     );
   }
 }
 
-// DELETE /api/applications — Delete all (or by status query)
+// DELETE /api/applications — Delete all (or by status)
 export async function DELETE(request: NextRequest) {
   if (!isDbAvailable()) {
-    return NextResponse.json(
-      { success: false, error: "Database not configured" },
-      { status: 503 }
-    );
+    return NextResponse.json({ success: false, error: "Database not configured" }, { status: 503 });
   }
 
   try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: "Please sign in" }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
     const olderThanDays = searchParams.get("olderThanDays");
 
-    // If olderThanDays, do bulk cleanup
     if (olderThanDays) {
-      const days = parseInt(olderThanDays);
-      const result = await cleanupOldRecords(days);
-      return NextResponse.json({
-        success: true,
-        message: `Cleaned up records older than ${days} days`,
-        deleted: result,
-      });
+      const result = await cleanupOldRecords(parseInt(olderThanDays));
+      return NextResponse.json({ success: true, deleted: result });
     }
 
-    // Otherwise delete by status (or all if no filter)
-    const where: any = {};
+    const where: any = { userId: user.id };
     if (status && status !== "all") {
       where.status = status;
     }
 
     const result = await db.jobApplication.deleteMany({ where });
-
-    return NextResponse.json({
-      success: true,
-      deleted: result.count,
-    });
+    return NextResponse.json({ success: true, deleted: result.count });
   } catch (error) {
-    console.error("DELETE /api/applications error:", error);
+    console.error("DELETE error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Database error",
-      },
+      { success: false, error: error instanceof Error ? error.message : "Database error" },
       { status: 500 }
     );
   }
